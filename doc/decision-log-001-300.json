@@ -1,0 +1,3902 @@
+[
+  {
+    "n": 1,
+    "question": "What exactly are you trying to deliver?",
+    "choices": {
+      "A": "A complete commercial logistics platform",
+      "B": "A polished prototype demonstrating the required scenario",
+      "C": "Mostly UI screens with no real backend",
+      "D": "A technical backend with a simple UI"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 2,
+    "question": "What should be the single most important demo story?",
+    "choices": {
+      "A": "Driver uploads many logistics documents",
+      "B": "Trader creates shipment → Driver moves → Gate closes/appears → Trader gets alerted → Shipment delivered",
+      "C": "Admin views complicated analytics",
+      "D": "Users chat with an AI logistics assistant"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 3,
+    "question": "What technology stack should you standardize on?",
+    "choices": {
+      "A": "Next.js + Tailwind + Supabase",
+      "B": "React + custom Express backend + PostgreSQL",
+      "C": "Flutter + Django + MySQL",
+      "D": "Separate technologies chosen independently by each member"
+    },
+    "recommendation": "A",
+    "final": "CUSTOM",
+    "note": "Final stack: React/Vite + Tailwind frontend, Python/FastAPI backend, Supabase Auth/Postgres/Storage/Realtime; OpenRouteService for routing, IndexedDB for offline."
+  },
+  {
+    "n": 4,
+    "question": "How should you implement the three roles?",
+    "choices": {
+      "A": "Three totally separate applications",
+      "B": "One app with authentication and role-based dashboards",
+      "C": "No authentication; three different URLs",
+      "D": "Hard-code different screens during presentation"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 5,
+    "question": "How realistic should authentication be?",
+    "choices": {
+      "A": "Build enterprise-grade permissions",
+      "B": "Supabase authentication with role stored in a profile table and backend/RLS enforcement",
+      "C": "Fake login buttons only",
+      "D": "Skip login entirely"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 6,
+    "question": "What should your shipment status model be?",
+    "choices": {
+      "A": "Only Active / Completed",
+      "B": "Requested → Assigned → Picked Up → In Transit → Checkpoint → Customs → Delivered",
+      "C": "20+ detailed logistics states",
+      "D": "Let Drivers type arbitrary status text"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": "Later refined with CANCELLED and separate delay_status."
+  },
+  {
+    "n": 7,
+    "question": "How should you simulate GPS?",
+    "choices": {
+      "A": "Integrate only a real Driver phone GPS",
+      "B": "Use predetermined coordinates and move the truck marker through them",
+      "C": "Build your own GPS tracking service",
+      "D": "Use only text locations"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": "Use OpenRouteService for route geometry. Later upgraded to support both real production mobile GPS and demo simulation."
+  },
+  {
+    "n": 8,
+    "question": "How should the Myanmar border/gate feature work?",
+    "choices": {
+      "A": "Admin changes a database gate status and affected shipments receive an alert",
+      "B": "Admin manually messages each Trader",
+      "C": "Gate status is only decorative",
+      "D": "Pull live Myanmar border-government data"
+    },
+    "recommendation": "A",
+    "final": "CUSTOM",
+    "note": "Driver can report existing or new gates/checkpoints; reports are evidence. Admin remains authoritative for manual overrides, while later design allows multi-driver consensus to auto-confirm/resolve routine incidents."
+  },
+  {
+    "n": 9,
+    "question": "How much offline functionality should you actually build?",
+    "choices": {
+      "A": "Full production offline synchronization",
+      "B": "Simulate/implement offline mode: cache Driver updates locally and sync when connection returns",
+      "C": "Mention offline support only in slides",
+      "D": "Ignore it"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 10,
+    "question": "With five people, what should you deliberately NOT build first?",
+    "choices": {
+      "A": "AI chatbot, payments, OCR, heavy analytics and other non-core extras",
+      "B": "Admin role",
+      "C": "Driver interface",
+      "D": "Gate alerts"
+    },
+    "recommendation": "A",
+    "final": "A",
+    "note": "Multiple/alternative routes were allowed later, but only after the core flow; learned routes are a differentiator, not a prerequisite."
+  },
+  {
+    "n": 11,
+    "question": "Who has final manual authority over official gate status?",
+    "choices": {
+      "A": "Any Driver",
+      "B": "Admin",
+      "C": "Trader",
+      "D": "Whoever reported it first"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": "Routine consensus may auto-confirm later; Admin can manually override."
+  },
+  {
+    "n": 12,
+    "question": "What should happen when a Driver reports a blocked checkpoint?",
+    "choices": {
+      "A": "Immediately mark the whole route closed",
+      "B": "Create a pending incident/report requiring verification or corroboration",
+      "C": "Ignore it until another Driver reports it",
+      "D": "Send only a chat message"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 13,
+    "question": "What gate statuses should you support?",
+    "choices": {
+      "A": "Open / Closed only",
+      "B": "Open / Congested / Blocked / Closed",
+      "C": "15 different statuses",
+      "D": "Free text"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 14,
+    "question": "What should Drivers submit with a gate report?",
+    "choices": {
+      "A": "Status only",
+      "B": "Status + location + timestamp + note + optional photo",
+      "C": "Photo only",
+      "D": "Long written report"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 15,
+    "question": "How should shipments relate to routes?",
+    "choices": {
+      "A": "Every shipment has one active route",
+      "B": "Every shipment simultaneously follows several routes",
+      "C": "Shipments do not store routes",
+      "D": "Driver chooses randomly"
+    },
+    "recommendation": "A",
+    "final": "A",
+    "note": "Route history and alternatives are stored separately; active_route_id represents current route."
+  },
+  {
+    "n": 16,
+    "question": "Who should approve a reroute after a gate closure?",
+    "choices": {
+      "A": "Trader",
+      "B": "Driver alone",
+      "C": "Admin",
+      "D": "Automatically reroute every shipment"
+    },
+    "recommendation": "C",
+    "final": "B",
+    "note": "Superseded later: Driver owns operational routing and can reroute their assigned shipment without Admin approval; route change is logged and visible."
+  },
+  {
+    "n": 17,
+    "question": "How should OpenRouteService be used?",
+    "choices": {
+      "A": "Make it the entire logistics backend",
+      "B": "Use it to calculate/display route geometry while your app owns shipment state",
+      "C": "Store everything inside ORS",
+      "D": "Do not maintain route data yourself"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 18,
+    "question": "What happens if OpenRouteService fails during the presentation?",
+    "choices": {
+      "A": "Demo fails",
+      "B": "Use saved/cached route coordinates or GeoJSON fallback",
+      "C": "Restart the presentation",
+      "D": "Remove the map completely"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 19,
+    "question": "What should happen when the Driver is offline and reports a gate problem?",
+    "choices": {
+      "A": "Report disappears",
+      "B": "Save locally as UNSYNCED and upload when internet returns",
+      "C": "Driver cannot use the application",
+      "D": "Immediately notify Admin somehow"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 20,
+    "question": "How far should multiple-route functionality go for the core prototype?",
+    "choices": {
+      "A": "Full automatic dynamic route optimization",
+      "B": "Primary route + alternative/Driver reroute with history",
+      "C": "No route concept at all",
+      "D": "AI dynamically invents routes"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": "Later expanded with observed/unmapped routes and route recommendations after core requirements are stable."
+  },
+  {
+    "n": 21,
+    "question": "What should be the core Supabase tables?",
+    "choices": {
+      "A": "users, shipments only",
+      "B": "profiles, shipments, routes, gates, gate_reports, shipment_events, alerts, documents",
+      "C": "One giant logistics_data table",
+      "D": "Separate database for every role"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": "Later expanded with route_points, route_traversals and incidents. Gates are hybrid: predefined known gates plus temporary Driver-discovered checkpoints."
+  },
+  {
+    "n": 22,
+    "question": "Where should user roles be stored?",
+    "choices": {
+      "A": "React local storage only",
+      "B": "profiles table linked to Supabase Auth",
+      "C": "Hardcoded in frontend files",
+      "D": "Browser cookies only"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 23,
+    "question": "What should the shipments table contain?",
+    "choices": {
+      "A": "Only shipment name",
+      "B": "Trader, Driver, route, cargo, origin/destination, current state and timestamps",
+      "C": "Every GPS coordinate ever recorded",
+      "D": "Gate reports and notifications inside the same row"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 24,
+    "question": "Where should shipment history be stored?",
+    "choices": {
+      "A": "Overwrite shipment.status and keep no history",
+      "B": "Separate shipment_events table",
+      "C": "One huge text string",
+      "D": "Store history in React"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 25,
+    "question": "How should GPS location be represented?",
+    "choices": {
+      "A": "Only one current latitude/longitude",
+      "B": "Current position plus GPS/history events or batches",
+      "C": "Driver types city name",
+      "D": "Screenshots of maps"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 26,
+    "question": "Where should Driver-uploaded photos be stored?",
+    "choices": {
+      "A": "Huge binary values in PostgreSQL",
+      "B": "Supabase Storage with paths/metadata in documents or reports",
+      "C": "Driver phone only",
+      "D": "React source folder"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 27,
+    "question": "Where should important business logic live?",
+    "choices": {
+      "A": "React only",
+      "B": "FastAPI/backend services",
+      "C": "CSS",
+      "D": "Browser local storage"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 28,
+    "question": "Should React directly access Supabase?",
+    "choices": {
+      "A": "Never",
+      "B": "Yes for safe auth/realtime/read operations under RLS; privileged actions go through FastAPI",
+      "C": "React should have the server secret key",
+      "D": "Everything must go through Python, including simple subscriptions"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 29,
+    "question": "How should alerts work?",
+    "choices": {
+      "A": "Hardcoded popup",
+      "B": "Store alerts in DB and use Supabase Realtime to update relevant UIs",
+      "C": "Send emails only",
+      "D": "Refresh browser every minute"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 30,
+    "question": "How should your five people divide the actual coding?",
+    "choices": {
+      "A": "Everyone codes everything",
+      "B": "Divide by ownership against one shared schema/API contract",
+      "C": "Each builds a separate prototype",
+      "D": "One person codes while four prepare slides"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 31,
+    "question": "What should the Admin see immediately after login?",
+    "choices": {
+      "A": "Blank dashboard with menu links",
+      "B": "Shipment summary + active gate issues + pending Driver reports + alerts",
+      "C": "Only user management",
+      "D": "Raw database tables"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 32,
+    "question": "What should happen when Admin opens a pending Driver gate report?",
+    "choices": {
+      "A": "Only show its text",
+      "B": "Show location, photo, Driver, shipment, timestamp, note and review controls",
+      "C": "Automatically approve it",
+      "D": "Delete it after reading"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 33,
+    "question": "Should Admin be allowed to create a gate without a Driver report?",
+    "choices": {
+      "A": "Yes",
+      "B": "No",
+      "C": "Only after two Driver reports",
+      "D": "Only Traders can create gates"
+    },
+    "recommendation": "A",
+    "final": "A",
+    "note": ""
+  },
+  {
+    "n": 34,
+    "question": "What should the Trader dashboard prioritize?",
+    "choices": {
+      "A": "All Drivers in the system",
+      "B": "Trader’s own shipments, current status, map, timeline and alerts",
+      "C": "System administration",
+      "D": "Gate approval"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 35,
+    "question": "What should a Trader see on shipment detail?",
+    "choices": {
+      "A": "Tracking number only",
+      "B": "Cargo + Driver + route/map + timeline + current status + related alerts",
+      "C": "Admin controls",
+      "D": "Backend logs"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 36,
+    "question": "What should the Driver home screen emphasize?",
+    "choices": {
+      "A": "Analytics",
+      "B": "Currently assigned shipment and large operational action buttons",
+      "C": "All company shipments",
+      "D": "User management"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 37,
+    "question": "How should a Driver report a completely new checkpoint?",
+    "choices": {
+      "A": "Force selection of an existing gate",
+      "B": "Report New Checkpoint captures location and asks for status, note and optional photo",
+      "C": "Type coordinates manually",
+      "D": "Call Admin instead"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 38,
+    "question": "What should happen when multiple Drivers report approximately the same temporary gate?",
+    "choices": {
+      "A": "Always create separate gates",
+      "B": "Show possible nearby match and allow association/merge into one gate/incident",
+      "C": "Delete later reports",
+      "D": "Automatically ban duplicate reports"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 39,
+    "question": "What should happen after a temporary checkpoint disappears?",
+    "choices": {
+      "A": "Delete everything",
+      "B": "Mark it resolved/archived and stop active warnings while preserving history",
+      "C": "Leave it permanently blocked",
+      "D": "Driver deletes it directly"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 40,
+    "question": "How many screens should your team build before polishing?",
+    "choices": {
+      "A": "20+ screens",
+      "B": "Minimum screens needed for one complete demo journey",
+      "C": "Every possible logistics screen",
+      "D": "Build every role simultaneously without prioritizing"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 41,
+    "question": "What should the Admin map show?",
+    "choices": {
+      "A": "Every user home address",
+      "B": "Active trucks, routes, known gates, temporary checkpoints and incidents",
+      "C": "Only Myanmar base map",
+      "D": "Only one truck"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 42,
+    "question": "What should the Trader map show?",
+    "choices": {
+      "A": "Every truck",
+      "B": "Only their shipment, route, truck position and relevant disruptions",
+      "C": "Every checkpoint in Myanmar",
+      "D": "Driver private GPS history"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 43,
+    "question": "What should the Driver map show?",
+    "choices": {
+      "A": "All customer shipments",
+      "B": "Current location, assigned/available routes, destination and relevant checkpoints",
+      "C": "Only destination",
+      "D": "Admin analytics"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 44,
+    "question": "How should simulated truck movement work during the presentation?",
+    "choices": {
+      "A": "Wait for real GPS movement",
+      "B": "Use predefined route coordinates with controlled manual/step simulation",
+      "C": "Move icon randomly",
+      "D": "Let ORS decide every few seconds"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 45,
+    "question": "What should be the most impressive moment in the live demo?",
+    "choices": {
+      "A": "Logging in",
+      "B": "Driver discovers checkpoint → reports → incident confirmed → Trader map/alert updates",
+      "C": "Opening database",
+      "D": "Showing source code"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 46,
+    "question": "Who should perform the live demo?",
+    "choices": {
+      "A": "All 5 constantly switch laptops",
+      "B": "1–2 operators while others explain specific sections",
+      "C": "Only backend developer",
+      "D": "Everyone clicks simultaneously"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 47,
+    "question": "How should you demonstrate realtime updates?",
+    "choices": {
+      "A": "Tell audience they exist",
+      "B": "Keep role views open and visibly show one action propagating",
+      "C": "Refresh everything manually",
+      "D": "Show screenshots"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 48,
+    "question": "What if internet access fails during the demo?",
+    "choices": {
+      "A": "Stop presentation",
+      "B": "Have cached routes, seeded data and an offline/demo fallback path",
+      "C": "Depend entirely on external APIs",
+      "D": "Explain what should have happened"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 49,
+    "question": "What if the Driver reports an incorrect checkpoint?",
+    "choices": {
+      "A": "Immediately notify everyone as fact",
+      "B": "Keep it pending/unverified until corroborated or reviewed",
+      "C": "Delete the Driver",
+      "D": "Ignore Driver reports"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 50,
+    "question": "What should happen if Admin rejects a Driver report?",
+    "choices": {
+      "A": "Delete all evidence",
+      "B": "Keep report history as rejected; official gate state unchanged; optional reason",
+      "C": "Mark gate closed anyway",
+      "D": "Alert Trader that route is blocked"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 51,
+    "question": "What exactly should offline mode mean in the prototype?",
+    "choices": {
+      "A": "Whole system works fully offline forever",
+      "B": "Driver actions are stored locally while disconnected and synchronized later",
+      "C": "Only map works offline",
+      "D": "Show offline label but do nothing"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 52,
+    "question": "Which Driver actions should be allowed while offline?",
+    "choices": {
+      "A": "Nothing",
+      "B": "Status update, checkpoint report, location update, notes and queued photo metadata/files",
+      "C": "Admin approval",
+      "D": "Trader shipment creation"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 53,
+    "question": "Where should offline Driver actions be stored?",
+    "choices": {
+      "A": "Supabase",
+      "B": "IndexedDB/local browser storage until synchronization",
+      "C": "React component state only",
+      "D": "Python memory"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": "Explicit final choice: IndexedDB."
+  },
+  {
+    "n": 54,
+    "question": "What should happen when internet connection returns?",
+    "choices": {
+      "A": "Delete offline records",
+      "B": "Sync queued actions in order/independently, mark success, retain failures for retry",
+      "C": "Ask Driver to re-enter everything",
+      "D": "Upload only most recent action"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 55,
+    "question": "What if a Driver reports a new checkpoint while offline?",
+    "choices": {
+      "A": "Ignore it",
+      "B": "Capture GPS/location if available, timestamp, note/photo and temporary local ID in IndexedDB, then sync later",
+      "C": "Immediately create official gate",
+      "D": "Change route locally for everyone"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": "GPS can work without internet; if geolocation fails, allow manual pin/location fallback. Demo can simulate coordinates."
+  },
+  {
+    "n": 56,
+    "question": "What should happen when a newly approved/confirmed checkpoint affects the active route?",
+    "choices": {
+      "A": "Automatically reroute with no Driver control",
+      "B": "Mark route disrupted and let Driver choose/reroute operationally",
+      "C": "End shipment",
+      "D": "Ignore checkpoint"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": "Final model: system flags disruption/recommendations; Driver can reroute immediately without Admin approval."
+  },
+  {
+    "n": 57,
+    "question": "Should the Driver be able to choose/suggest an alternate route without Admin approval?",
+    "choices": {
+      "A": "No, never",
+      "B": "Yes; Driver owns operational routing and changes are logged/visible",
+      "C": "Driver can silently reroute with no record",
+      "D": "Trader chooses road"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": "Final decision explicitly removes Admin approval requirement."
+  },
+  {
+    "n": 58,
+    "question": "What should happen to the old route after rerouting?",
+    "choices": {
+      "A": "Delete it",
+      "B": "Keep it in route history and mark the new route active",
+      "C": "Keep both active",
+      "D": "Replace every database record"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 59,
+    "question": "What if the Driver reaches a gate that is not on the planned route?",
+    "choices": {
+      "A": "Prevent reporting it",
+      "B": "Allow reporting because field reality may differ from planned route data",
+      "C": "Automatically reject it",
+      "D": "Change destination"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 60,
+    "question": "How complicated should route intelligence become?",
+    "choices": {
+      "A": "Build automatic national route optimization",
+      "B": "Stop at simple primary/alternative and Driver rerouting",
+      "C": "Build traffic prediction",
+      "D": "Add AI route forecasting/recommendation"
+    },
+    "recommendation": "B",
+    "final": "D",
+    "note": "User chose D. Final constraint: AI/recommendation engine may suggest/explain routes, but Driver always decides; keep the implementation heuristic and optional after core features."
+  },
+  {
+    "n": 61,
+    "question": "Can a Driver edit an official confirmed gate status?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; Driver submits observations, while system/Admin manages authoritative status",
+      "C": "Only while driving",
+      "D": "Driver and Trader can"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 62,
+    "question": "Can the Driver reroute their own assigned shipment?",
+    "choices": {
+      "A": "No",
+      "B": "Yes, without Admin approval, but route change is logged",
+      "C": "Only Trader can approve",
+      "D": "Only AI decides"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 63,
+    "question": "Can a Driver reroute another Driver’s shipment?",
+    "choices": {
+      "A": "Yes",
+      "B": "No",
+      "C": "Only if nearby",
+      "D": "Only during emergencies"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 64,
+    "question": "Can a Trader see another Trader’s cargo?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; only their own shipments",
+      "C": "Only on Admin map",
+      "D": "Yes but hide cargo names"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 65,
+    "question": "Can a Trader change the Driver’s route?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; Trader tracks cargo but does not control field routing",
+      "C": "Only if delayed",
+      "D": "Always"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 66,
+    "question": "Can Admin see all active trucks?",
+    "choices": {
+      "A": "No",
+      "B": "Yes",
+      "C": "Only blocked trucks",
+      "D": "Only one region"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 67,
+    "question": "Can Admin manually change a Driver’s route?",
+    "choices": {
+      "A": "Never",
+      "B": "Yes, as an exceptional operational override with audit reason",
+      "C": "Every change must come from Admin",
+      "D": "Admin should not see routes"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 68,
+    "question": "What happens if Driver and Admin/system disagree about a gate?",
+    "choices": {
+      "A": "Driver silently overwrites official state",
+      "B": "Driver submits a new observation; official state changes only via evidence rules/Admin override",
+      "C": "Delete both records",
+      "D": "Trader decides"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 69,
+    "question": "Who can see uploaded Driver documents?",
+    "choices": {
+      "A": "Everyone",
+      "B": "Relevant Driver + shipment Trader + authorized Admin",
+      "C": "Every Trader",
+      "D": "Public internet"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 70,
+    "question": "Who should be allowed to mark the shipment DELIVERED?",
+    "choices": {
+      "A": "Trader",
+      "B": "Assigned Driver with timestamp/location/proof",
+      "C": "Anyone",
+      "D": "Only Admin"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 71,
+    "question": "Should route confidence be global?",
+    "choices": {
+      "A": "Yes, one score for everyone",
+      "B": "No; confidence/recommendation can consider context such as vehicle type",
+      "C": "Only Admin has score",
+      "D": "No score at all"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 72,
+    "question": "What should reinforce a route most?",
+    "choices": {
+      "A": "Driver selecting it",
+      "B": "Successfully completing a real traversal",
+      "C": "Admin viewing it",
+      "D": "Trader liking it"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 73,
+    "question": "Should one Driver travelling a route repeatedly be enough to confirm it?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; require multiple unique Drivers",
+      "C": "One trip is enough",
+      "D": "Admin decides every time"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 74,
+    "question": "What should reduce route confidence?",
+    "choices": {
+      "A": "Nothing",
+      "B": "Recent blockages, failed journeys and long inactivity",
+      "C": "Driver changing phones",
+      "D": "Trader changing cargo"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 75,
+    "question": "Should an unconfirmed route be hidden from other Drivers?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; show it clearly labeled unconfirmed",
+      "C": "Only Admin sees it",
+      "D": "Delete until verified"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 76,
+    "question": "Should the system automatically select the highest-confidence route?",
+    "choices": {
+      "A": "Yes without asking",
+      "B": "No; recommend routes and Driver makes final decision",
+      "C": "Admin makes final decision",
+      "D": "Trader chooses"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 77,
+    "question": "What should a Driver see when choosing among routes?",
+    "choices": {
+      "A": "Only route names",
+      "B": "Distance + confidence + recent incidents + last successful use",
+      "C": "Only distance",
+      "D": "A single AI answer"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 78,
+    "question": "Should route confidence decay over time?",
+    "choices": {
+      "A": "No",
+      "B": "Yes",
+      "C": "Only manually",
+      "D": "Delete routes after one month"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 79,
+    "question": "Should blocked status and confidence be the same number/state?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; operational condition and route trust are separate",
+      "C": "Only for temporary routes",
+      "D": "Remove status entirely"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 80,
+    "question": "How far should you implement the ant-colony idea in this prototype?",
+    "choices": {
+      "A": "Build full academic Ant Colony Optimization",
+      "B": "Implement simple pheromone-inspired confidence/recommendation rules",
+      "C": "Only mention ants in slides",
+      "D": "Replace ORS completely"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 81,
+    "question": "How should a Driver-created route be stored?",
+    "choices": {
+      "A": "One text field",
+      "B": "Route record plus ordered GPS breadcrumb points",
+      "C": "Screenshot only",
+      "D": "Only on Driver phone"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 82,
+    "question": "When should breadcrumb recording start?",
+    "choices": {
+      "A": "Every time app is open",
+      "B": "When Driver starts trip or intentionally starts route tracking",
+      "C": "Only after delivery",
+      "D": "Always in background forever"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 83,
+    "question": "What should count as a successful route traversal?",
+    "choices": {
+      "A": "Driver clicked route",
+      "B": "Driver actually travelled most of route and reached intended waypoint/destination",
+      "C": "Admin viewed it",
+      "D": "Trader received alert"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 84,
+    "question": "How should the system recognize that two Drivers used roughly the same route?",
+    "choices": {
+      "A": "Exact coordinate-for-coordinate match",
+      "B": "Compare GPS paths within a reasonable distance tolerance",
+      "C": "Same route name only",
+      "D": "Ask Admin every time"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 85,
+    "question": "What should happen when a Driver’s GPS data is clearly impossible?",
+    "choices": {
+      "A": "Trust it",
+      "B": "Reject/flag impossible jumps and exclude from reinforcement",
+      "C": "Confirm route",
+      "D": "Delete Driver"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 86,
+    "question": "Should every successful Driver trip add the same amount of confidence?",
+    "choices": {
+      "A": "Yes",
+      "B": "Mostly yes for prototype simplicity, but only valid completed trips count",
+      "C": "Build complicated ML model",
+      "D": "Only Admin trips count"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 87,
+    "question": "How do you stop fake repeated trips from confirming a route?",
+    "choices": {
+      "A": "Do not",
+      "B": "Require multiple unique Drivers and valid GPS movement",
+      "C": "Trust each Driver forever",
+      "D": "Require Trader approval"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 88,
+    "question": "What if Drivers report contradictory conditions on the same route?",
+    "choices": {
+      "A": "Newest report is absolute truth",
+      "B": "Preserve observations and mark condition uncertain until more evidence arrives",
+      "C": "Delete one",
+      "D": "Ask Trader"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 89,
+    "question": "Should Driver reputation affect route confidence?",
+    "choices": {
+      "A": "Build full reputation system",
+      "B": "Not in V1; validate evidence rather than ranking people",
+      "C": "Only Admin decides reputation",
+      "D": "Automatically distrust new Drivers"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 90,
+    "question": "What is the minimum database addition for ant-style route learning?",
+    "choices": {
+      "A": "15 new tables",
+      "B": "Add route_points, route_traversals and route metrics",
+      "C": "Replace entire database",
+      "D": "Store everything in shipments"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 91,
+    "question": "Should shipments directly contain the whole route history?",
+    "choices": {
+      "A": "Yes, everything in one row",
+      "B": "No; shipment stores current route while changes/traversals are separate",
+      "C": "Store route history in React",
+      "D": "Do not store history"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 92,
+    "question": "What should the final route-related database model be?",
+    "choices": {
+      "A": "routes only",
+      "B": "routes + route_points + route_traversals",
+      "C": "One table per Driver",
+      "D": "GPS data in profiles"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 93,
+    "question": "What should happen when a Driver starts travelling with no known route?",
+    "choices": {
+      "A": "Block Driver",
+      "B": "Create a temporary observed-route session and record breadcrumbs",
+      "C": "Ask Admin to create road",
+      "D": "Fake an ORS route"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 94,
+    "question": "When should an observed path become reusable by other Drivers?",
+    "choices": {
+      "A": "Only after full confirmation",
+      "B": "After a valid completed traversal, clearly labeled UNCONFIRMED",
+      "C": "Never",
+      "D": "After Admin approval only"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 95,
+    "question": "What API pattern should record Driver GPS movement?",
+    "choices": {
+      "A": "One request every second forever",
+      "B": "Batch GPS points periodically and support offline queuing",
+      "C": "Only upload after delivery",
+      "D": "Put coordinates in URL"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 96,
+    "question": "What API should handle unexpected checkpoints?",
+    "choices": {
+      "A": "One generic /update endpoint",
+      "B": "Dedicated gate-report endpoints",
+      "C": "Direct SQL from React",
+      "D": "Put checkpoint data inside route name"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 97,
+    "question": "How should Driver rerouting be recorded?",
+    "choices": {
+      "A": "Just overwrite active_route_id",
+      "B": "Create event/traversal history with old/new route, Driver, time and reason",
+      "C": "Do not record it",
+      "D": "Ask Admin"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 98,
+    "question": "Where should pheromone/confidence calculation happen?",
+    "choices": {
+      "A": "React",
+      "B": "FastAPI/backend service",
+      "C": "CSS",
+      "D": "Driver manually enters score"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 99,
+    "question": "Should confidence be recalculated on every map render?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; recalculate on meaningful events and store/update result",
+      "C": "Only once",
+      "D": "Trader calculates it"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 100,
+    "question": "What should be the single end-to-end backend flow your team gets working first?",
+    "choices": {
+      "A": "AI routing algorithm",
+      "B": "Trader shipment → assignment → movement → checkpoint report → alert → reroute → delivery",
+      "C": "User profile editing",
+      "D": "Analytics dashboard"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 101,
+    "question": "What is absolutely mandatory for V1?",
+    "choices": {
+      "A": "RBAC, shipment lifecycle, maps, gate reports, alerts, offline simulation/implementation",
+      "B": "AI forecasting, analytics, payments, OCR",
+      "C": "Full production compliance",
+      "D": "Everything discussed so far"
+    },
+    "recommendation": "A",
+    "final": "A",
+    "note": ""
+  },
+  {
+    "n": 102,
+    "question": "Should learned/pheromone routes be required for the live demo?",
+    "choices": {
+      "A": "Yes; demo fails without them",
+      "B": "No; build only after core logistics flow works",
+      "C": "Replace normal routing with them",
+      "D": "Remove them completely"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 103,
+    "question": "How much AI route recommendation should V1 contain?",
+    "choices": {
+      "A": "Full ML model",
+      "B": "Simple confidence scoring + recommended routes",
+      "C": "No explanation",
+      "D": "Train a custom LLM"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 104,
+    "question": "Should you implement real background/mobile GPS?",
+    "choices": {
+      "A": "Yes, production mobile GPS plus a simulated fallback",
+      "B": "No; simulation only",
+      "C": "Build native Android services only",
+      "D": "Remove GPS"
+    },
+    "recommendation": "B",
+    "final": "A",
+    "note": "Explicit user decision: implement real/live device GPS and simulated GPS fallback. Keep simulation as demo-safe path because assignment only mandates simulated GPS."
+  },
+  {
+    "n": 105,
+    "question": "How much offline capability should V1 implement?",
+    "choices": {
+      "A": "Complete offline-first application",
+      "B": "IndexedDB queue + reconnect sync demonstration",
+      "C": "No offline logic",
+      "D": "Offline maps for all Myanmar"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 106,
+    "question": "How many shipment scenarios should you prepare?",
+    "choices": {
+      "A": "20 realistic shipments",
+      "B": "One perfect golden-path demo + 1–2 seeded examples",
+      "C": "Randomly generate hundreds",
+      "D": "Only empty screens"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 107,
+    "question": "How many known gates/routes should you seed?",
+    "choices": {
+      "A": "Every gate in Myanmar",
+      "B": "Small representative set plus dynamic temporary checkpoints",
+      "C": "None",
+      "D": "Hundreds of fake gates"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 108,
+    "question": "Should document uploads include OCR/document verification?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; upload/display reliably first",
+      "C": "Train customs-document model",
+      "D": "Remove uploads"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 109,
+    "question": "How much analytics should Admin dashboard contain?",
+    "choices": {
+      "A": "Advanced forecasting/BI",
+      "B": "Simple counts/status cards and operational map",
+      "C": "No dashboard",
+      "D": "Full financial analytics"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 110,
+    "question": "If time runs short, what is the correct feature-cutting order?",
+    "choices": {
+      "A": "Remove core assignment features first",
+      "B": "Cut advanced extensions before required features",
+      "C": "Keep route AI and remove RBAC",
+      "D": "Remove live demo and explain idea"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 111,
+    "question": "What should the team build first?",
+    "choices": {
+      "A": "Five separate screens in parallel",
+      "B": "Shared design package + schema/API contract + one shipment golden path",
+      "C": "Slides",
+      "D": "Pheromone algorithm"
+    },
+    "recommendation": "B",
+    "final": "CUSTOM",
+    "note": "Before B, create V1 architecture diagram, functional diagram, use-case/usage diagram, class diagram and ER diagram in Mermaid/HTML. Then freeze schema/API and build the golden path."
+  },
+  {
+    "n": 112,
+    "question": "Who should own the shared technical contract?",
+    "choices": {
+      "A": "Everyone changes it freely",
+      "B": "Person 1 + Person 3 jointly own it",
+      "C": "Frontend only",
+      "D": "Nobody"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 113,
+    "question": "What should Person 3 build before frontend developers depend on them?",
+    "choices": {
+      "A": "Every backend feature",
+      "B": "Database migrations + seeded users + basic shipment endpoints + API docs",
+      "C": "AI routing first",
+      "D": "Analytics"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 114,
+    "question": "What should Person 2 build while backend is being prepared?",
+    "choices": {
+      "A": "Wait",
+      "B": "Admin/Trader UI against agreed mock JSON",
+      "C": "Change schema independently",
+      "D": "Build Python"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 115,
+    "question": "What should Person 4 build first?",
+    "choices": {
+      "A": "Full pheromone algorithm",
+      "B": "Shared map component + simulated GPS + live GPS mode",
+      "C": "Admin dashboard",
+      "D": "Slides"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 116,
+    "question": "What should Person 5 test first?",
+    "choices": {
+      "A": "Colors/fonts",
+      "B": "Golden-path integration across all three roles",
+      "C": "Advanced AI",
+      "D": "Presentation animations"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 117,
+    "question": "How should Git workflow work with five people?",
+    "choices": {
+      "A": "Everyone commits to main",
+      "B": "Short-lived feature branches + review + protected stable branch/tag",
+      "C": "Five separate repos",
+      "D": "Send ZIP files"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 118,
+    "question": "When should integration happen?",
+    "choices": {
+      "A": "Final night",
+      "B": "Continuously from the first vertical flow",
+      "C": "After every feature is finished",
+      "D": "During presentation"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 119,
+    "question": "What should happen when AI-generated code causes integration problems?",
+    "choices": {
+      "A": "Keep adding prompts until code grows",
+      "B": "Reduce to smallest failing case, inspect contracts, then request targeted fix",
+      "C": "Rewrite whole project",
+      "D": "Hide bug"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 120,
+    "question": "What should implementation order be?",
+    "choices": {
+      "A": "Maps → AI → UI → DB → auth",
+      "B": "Foundation → shipment → maps → gate workflow → offline → learned routes → polish",
+      "C": "Pheromone first",
+      "D": "Everyone chooses independently"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 121,
+    "question": "What should the full V1 shipment lifecycle be?",
+    "choices": {
+      "A": "ACTIVE → DONE",
+      "B": "REQUESTED → ASSIGNED → PICKED_UP → IN_TRANSIT → AT_CHECKPOINT → CUSTOMS → DELIVERED",
+      "C": "25 detailed statuses",
+      "D": "Driver types any status"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": "Later includes CANCELLED as terminal non-delivery state."
+  },
+  {
+    "n": 122,
+    "question": "Who creates a REQUESTED shipment?",
+    "choices": {
+      "A": "Admin only",
+      "B": "Trader",
+      "C": "Driver",
+      "D": "AI"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 123,
+    "question": "Who changes REQUESTED → ASSIGNED?",
+    "choices": {
+      "A": "Trader",
+      "B": "Admin",
+      "C": "Driver",
+      "D": "Automatically"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 124,
+    "question": "Who changes ASSIGNED → PICKED_UP?",
+    "choices": {
+      "A": "Driver",
+      "B": "Trader",
+      "C": "Admin only",
+      "D": "System timer"
+    },
+    "recommendation": "A",
+    "final": "A",
+    "note": ""
+  },
+  {
+    "n": 125,
+    "question": "Who controls normal operational shipment updates after pickup?",
+    "choices": {
+      "A": "Admin",
+      "B": "Assigned Driver",
+      "C": "Trader",
+      "D": "Everyone"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 126,
+    "question": "What if Driver encounters multiple checkpoints?",
+    "choices": {
+      "A": "AT_CHECKPOINT can only happen once",
+      "B": "Keep current_status simple and create shipment_event for each checkpoint",
+      "C": "Create CHECKPOINT_1/2/3 statuses",
+      "D": "Ignore later checkpoints"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 127,
+    "question": "Should the system allow backward/nonlinear state transitions?",
+    "choices": {
+      "A": "Never",
+      "B": "Yes when operationally valid, with event history/reason",
+      "C": "Any role can change freely",
+      "D": "Delete previous events"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 128,
+    "question": "What if Driver skips a state?",
+    "choices": {
+      "A": "Reject every skipped state",
+      "B": "Allow reasonable transition and infer/log intermediate event where appropriate",
+      "C": "Mark shipment corrupted",
+      "D": "Require Admin approval"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 129,
+    "question": "What should happen when shipment is delayed?",
+    "choices": {
+      "A": "Use DELAYED as main lifecycle state",
+      "B": "Keep lifecycle status and delay condition separate",
+      "C": "Change status to ERROR",
+      "D": "Do nothing"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 130,
+    "question": "What exactly should mark a shipment complete?",
+    "choices": {
+      "A": "Driver clicks DELIVERED only",
+      "B": "Assigned Driver confirms delivery with timestamp, location and proof photo",
+      "C": "Admin closes every shipment",
+      "D": "Trader viewing it"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 131,
+    "question": "Should all five diagrams be created before heavy coding?",
+    "choices": {
+      "A": "No; diagrams only for presentation",
+      "B": "Yes; create V1 diagrams first and update as implementation changes",
+      "C": "Only ER matters",
+      "D": "Create after everything is finished"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 132,
+    "question": "What should the Architecture Diagram primarily show?",
+    "choices": {
+      "A": "Database columns",
+      "B": "Major technical components and data flow",
+      "C": "Every React component",
+      "D": "Only users"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 133,
+    "question": "What should the Functional Diagram show?",
+    "choices": {
+      "A": "Classes/methods",
+      "B": "Business processes and information flow",
+      "C": "SQL relationships",
+      "D": "Deployment servers"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 134,
+    "question": "What should the Use-Case Diagram focus on?",
+    "choices": {
+      "A": "Database tables",
+      "B": "What Admin, Trader and Driver are allowed to do",
+      "C": "CSS components",
+      "D": "Python functions"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 135,
+    "question": "Should Use-Case Diagram show Admin approving Driver reroutes?",
+    "choices": {
+      "A": "Yes",
+      "B": "No",
+      "C": "Only if Trader requests",
+      "D": "Always"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 136,
+    "question": "What should the ER Diagram represent?",
+    "choices": {
+      "A": "Python classes",
+      "B": "Persistent entities and relationships in Supabase/PostgreSQL",
+      "C": "React components",
+      "D": "User navigation"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 137,
+    "question": "What should the Class Diagram represent?",
+    "choices": {
+      "A": "Copy ER exactly",
+      "B": "Domain objects and application services including behavior",
+      "C": "Database indexes",
+      "D": "HTML pages only"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 138,
+    "question": "Where should pheromone/route-learning logic appear in diagrams?",
+    "choices": {
+      "A": "Everywhere",
+      "B": "Architecture + Class + Functional diagrams, marked as extension",
+      "C": "Nowhere",
+      "D": "Only ER"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 139,
+    "question": "Should Mermaid files be generated once and forgotten?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; keep source under version control and update it",
+      "C": "Delete source after PNG",
+      "D": "Only Person 1 sees them"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 140,
+    "question": "How should diagrams be used during the 30-minute presentation?",
+    "choices": {
+      "A": "Explain every table/class for 15 minutes",
+      "B": "Show only diagrams that support the story; keep details for Q&A",
+      "C": "Do not show architecture",
+      "D": "Read Mermaid code aloud"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 141,
+    "question": "Should all three roles use the exact same map data?",
+    "choices": {
+      "A": "Yes, everyone sees everything",
+      "B": "Same base map component with role-specific layers",
+      "C": "Three separate map systems",
+      "D": "Only Driver gets map"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 142,
+    "question": "How should different route types appear?",
+    "choices": {
+      "A": "All identical",
+      "B": "Visually distinguish planned, active, Driver-observed and disrupted routes",
+      "C": "Only active route",
+      "D": "Use route names only"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 143,
+    "question": "Should GPS breadcrumbs always be visible?",
+    "choices": {
+      "A": "Yes, every coordinate",
+      "B": "No; show current position by default and allow history/trail when useful",
+      "C": "Never show breadcrumbs",
+      "D": "Only Admin sees location"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 144,
+    "question": "How should an unexpected temporary checkpoint appear?",
+    "choices": {
+      "A": "As confirmed gate immediately",
+      "B": "Clearly unverified/pending until confirmed",
+      "C": "Hidden until Admin approval",
+      "D": "As part of route line"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 145,
+    "question": "What should happen when several reports refer to roughly the same checkpoint?",
+    "choices": {
+      "A": "Show overlapping markers",
+      "B": "Combine visually under one checkpoint/incident with multiple observations",
+      "C": "Delete all except newest",
+      "D": "Hide them"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 146,
+    "question": "How should learned routes display confidence?",
+    "choices": {
+      "A": "Raw decimal only",
+      "B": "Simple confidence levels with detailed score on click",
+      "C": "Do not show confidence",
+      "D": "Only Admin sees confidence"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 147,
+    "question": "What should map do if Driver leaves every known route?",
+    "choices": {
+      "A": "Display error and stop tracking",
+      "B": "Continue GPS tracking and begin observed-route trail",
+      "C": "Force Driver back",
+      "D": "Automatically mark delayed"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 148,
+    "question": "Should ORS routes and Driver-observed routes be treated equally?",
+    "choices": {
+      "A": "Yes",
+      "B": "Both are candidates, but source/confidence remain visible",
+      "C": "Driver routes always win",
+      "D": "ORS always wins"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 149,
+    "question": "How should map clutter be controlled?",
+    "choices": {
+      "A": "Show everything simultaneously",
+      "B": "Role-based layers, zoom detail, filters and selected-item focus",
+      "C": "Remove information permanently",
+      "D": "Separate page for every marker"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 150,
+    "question": "What should happen when Driver taps a route on map?",
+    "choices": {
+      "A": "Immediately switch route",
+      "B": "Show route details first, then explicit Use This Route action",
+      "C": "Ask Admin",
+      "D": "Nothing"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 151,
+    "question": "Who should receive a Driver’s new checkpoint report immediately?",
+    "choices": {
+      "A": "Everyone",
+      "B": "Admin/operations immediately; affected Trader after relevant confirmation",
+      "C": "Trader only",
+      "D": "Nobody until delivery"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 152,
+    "question": "Should every Driver report create a Trader alert?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; only reports/incidents affecting that Trader’s shipment/route",
+      "C": "Only if Driver asks",
+      "D": "Only once/day"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 153,
+    "question": "What alert severity levels should V1 have?",
+    "choices": {
+      "A": "One generic type",
+      "B": "INFO / WARNING / CRITICAL",
+      "C": "Ten levels",
+      "D": "Free-text severity"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 154,
+    "question": "What should happen when multiple reports describe the same disruption?",
+    "choices": {
+      "A": "Send one alert per report",
+      "B": "Update one existing incident/alert rather than spam duplicates",
+      "C": "Ignore later reports",
+      "D": "Delete original alert"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 155,
+    "question": "Should Admin be able to broadcast a manual alert?",
+    "choices": {
+      "A": "No",
+      "B": "Yes; all users, routes or affected shipments/audiences",
+      "C": "Only Drivers",
+      "D": "Email only"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 156,
+    "question": "What happens when a Driver changes route?",
+    "choices": {
+      "A": "No notification",
+      "B": "Log change; Admin and affected Trader see update/lightweight notification",
+      "C": "Critical alert every time",
+      "D": "Admin must approve first"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 157,
+    "question": "What happens when a route becomes BLOCKED?",
+    "choices": {
+      "A": "Only change marker",
+      "B": "Update route/incident state, find affected shipments, create alerts and update maps",
+      "C": "Generic message to everyone",
+      "D": "Delete route"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 158,
+    "question": "What happens when disruption is resolved?",
+    "choices": {
+      "A": "Leave warning forever",
+      "B": "Mark resolved, stop active warning and optionally notify affected users",
+      "C": "Delete history",
+      "D": "Recreate route"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 159,
+    "question": "Should alerts disappear after being read?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; mark read and preserve history",
+      "C": "Delete after 30 seconds",
+      "D": "Store only unread"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 160,
+    "question": "How should realtime notification delivery work?",
+    "choices": {
+      "A": "Browser refresh only",
+      "B": "Store alert in Supabase then realtime subscription updates React; refresh/poll fallback",
+      "C": "SMS only",
+      "D": "AI chatbot"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 161,
+    "question": "What should be the lifecycle of a gate incident?",
+    "choices": {
+      "A": "OPEN → CLOSED only",
+      "B": "PENDING → CONFIRMED/UNCERTAIN → RESOLVED → ARCHIVED",
+      "C": "Free text only",
+      "D": "Delete after resolution"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 162,
+    "question": "What should happen when the first Driver reports a new blockage?",
+    "choices": {
+      "A": "Immediately make official",
+      "B": "Create a PENDING incident/report",
+      "C": "Ignore it",
+      "D": "Alert every user"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 163,
+    "question": "What if a second Driver independently reports the same blockage?",
+    "choices": {
+      "A": "Create completely separate incident",
+      "B": "Attach to same incident and increase confidence",
+      "C": "Delete first report",
+      "D": "Archive both"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 164,
+    "question": "Should multiple matching Driver reports ever auto-confirm an incident?",
+    "choices": {
+      "A": "Never",
+      "B": "Yes, optionally after a clear threshold such as 2 unique Drivers in a recent window near same location",
+      "C": "One report is enough",
+      "D": "Only Trader can confirm"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 165,
+    "question": "What if two Drivers report opposite conditions?",
+    "choices": {
+      "A": "Use whichever came first",
+      "B": "Mark incident UNCERTAIN/conflicting and wait for more evidence",
+      "C": "Delete both",
+      "D": "Trader chooses"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 166,
+    "question": "Who can manually override incident status?",
+    "choices": {
+      "A": "Any Driver",
+      "B": "Admin",
+      "C": "Trader",
+      "D": "Nobody"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 167,
+    "question": "What should happen when Drivers report a previously blocked gate is clear?",
+    "choices": {
+      "A": "Immediately delete blockage",
+      "B": "Create CLEAR observations and move toward RESOLVED when enough evidence exists",
+      "C": "Ignore them",
+      "D": "Keep blocked forever"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 168,
+    "question": "Should resolved incidents still affect route confidence?",
+    "choices": {
+      "A": "No, forget completely",
+      "B": "Yes, as historical evidence with reduced weight over time",
+      "C": "Permanently punish route",
+      "D": "Permanently block route"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 169,
+    "question": "Should Admin have to approve every incident resolution?",
+    "choices": {
+      "A": "Yes, always",
+      "B": "No; repeated clear evidence may auto-resolve, Admin handles exceptions",
+      "C": "Never allow Admin involvement",
+      "D": "Trader approves"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 170,
+    "question": "What should be the source of truth for current route/gate condition?",
+    "choices": {
+      "A": "Latest Driver message only",
+      "B": "Aggregated incident state derived from reports plus Admin overrides",
+      "C": "Trader comments",
+      "D": "OpenRouteService only"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 171,
+    "question": "What should starting confidence be for a brand-new Driver-observed route?",
+    "choices": {
+      "A": "0",
+      "B": "20",
+      "C": "50",
+      "D": "100"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 172,
+    "question": "How much should one successful traversal add?",
+    "choices": {
+      "A": "+1",
+      "B": "+10",
+      "C": "+50",
+      "D": "+100"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 173,
+    "question": "Should a successful traversal by a new unique Driver add an extra bonus?",
+    "choices": {
+      "A": "No",
+      "B": "Yes, +10 extra",
+      "C": "+100 extra",
+      "D": "Only Admin counts"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 174,
+    "question": "At what confidence should a route become automatically CONFIRMED?",
+    "choices": {
+      "A": "30",
+      "B": "50, and at least 2 unique successful Drivers",
+      "C": "100 only",
+      "D": "Never automatically"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 175,
+    "question": "How much should a confirmed blockage penalize route confidence?",
+    "choices": {
+      "A": "-2",
+      "B": "-20",
+      "C": "-100 permanently",
+      "D": "No penalty"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 176,
+    "question": "Should an unverified Driver blockage report immediately reduce confidence?",
+    "choices": {
+      "A": "Yes, heavily",
+      "B": "Only slightly or not at all until corroborated/confirmed",
+      "C": "Set confidence to zero",
+      "D": "Delete route"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 177,
+    "question": "How should time decay work?",
+    "choices": {
+      "A": "Reduce every minute",
+      "B": "Mild decay after inactivity, e.g. -5 after each 30-day period beyond threshold",
+      "C": "Never decay",
+      "D": "Delete after 30 days"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 178,
+    "question": "Should confidence ever reach zero?",
+    "choices": {
+      "A": "Yes and delete route",
+      "B": "It can become very low, but preserve route history",
+      "C": "Never below 50",
+      "D": "Always keep 100"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 179,
+    "question": "How should route recommendations combine distance and confidence?",
+    "choices": {
+      "A": "Always choose shortest route",
+      "B": "Calculate recommendation score using confidence, incidents and distance",
+      "C": "Always highest confidence regardless of distance",
+      "D": "Let AI invent answer"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 180,
+    "question": "Should you expose the exact algorithm to Drivers?",
+    "choices": {
+      "A": "Yes, full formula everywhere",
+      "B": "No; show understandable reasons, details for Admin/debugging",
+      "C": "Hide all reasoning",
+      "D": "Show only AI message"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 181,
+    "question": "How should the Driver choose GPS mode?",
+    "choices": {
+      "A": "Automatically with no control",
+      "B": "Explicit switch: LIVE GPS or DEMO SIMULATION",
+      "C": "Simulation only",
+      "D": "Live GPS only"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 182,
+    "question": "Should simulated GPS data affect learned-route confidence?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; simulation must never reinforce production routes",
+      "C": "Only Admin decides",
+      "D": "Sometimes"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 183,
+    "question": "What should happen if Driver denies GPS permission?",
+    "choices": {
+      "A": "App stops",
+      "B": "Show warning and allow retry/simulation/manual location fallback",
+      "C": "Enable GPS anyway",
+      "D": "Log out"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 184,
+    "question": "How often should live GPS points be recorded?",
+    "choices": {
+      "A": "Every millisecond",
+      "B": "Controlled interval such as 5–15 seconds or meaningful movement threshold",
+      "C": "Once/hour",
+      "D": "Only at delivery"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 185,
+    "question": "Should every GPS point immediately be sent to FastAPI?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; buffer/batch points, especially for unstable internet",
+      "C": "Never send GPS data",
+      "D": "Only one final coordinate"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 186,
+    "question": "What should happen when GPS accuracy is poor?",
+    "choices": {
+      "A": "Accept everything",
+      "B": "Store accuracy metadata and exclude very unreliable points from route learning",
+      "C": "Delete route",
+      "D": "Mark delivered"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 187,
+    "question": "How should the simulator move the truck?",
+    "choices": {
+      "A": "Randomly around Myanmar",
+      "B": "Along predefined route points with start/pause/next/jump controls",
+      "C": "Teleport to destination",
+      "D": "Admin manually enters every coordinate"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 188,
+    "question": "Should simulated and live GPS use different map components?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; same tracking pipeline, different LocationProvider",
+      "C": "Live GPS has no map",
+      "D": "Simulation has no map"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 189,
+    "question": "What happens when Driver loses internet but still has GPS?",
+    "choices": {
+      "A": "Stop tracking",
+      "B": "Continue recording GPS locally, then synchronize later",
+      "C": "Switch to simulation automatically",
+      "D": "Delete unsent locations"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 190,
+    "question": "How should route-learning decide whether a traversal is eligible for reinforcement?",
+    "choices": {
+      "A": "Every traversal counts",
+      "B": "Require LIVE_GPS + valid movement + successful trip + reasonable path coverage",
+      "C": "Simulation counts twice",
+      "D": "Driver presses confirm route"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 191,
+    "question": "What kinds of uploads should V1 support?",
+    "choices": {
+      "A": "Any file type",
+      "B": "Checkpoint photo, customs/document photo, cargo photo and delivery proof",
+      "C": "Video uploads",
+      "D": "PDF only"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 192,
+    "question": "Where should uploaded files live?",
+    "choices": {
+      "A": "PostgreSQL binary fields",
+      "B": "Supabase Storage with metadata/path in DB",
+      "C": "Local phone only",
+      "D": "React public folder"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 193,
+    "question": "Should uploaded files be publicly accessible?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; private bucket with authorized/signed access",
+      "C": "Only checkpoint photos private",
+      "D": "Put on social media"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 194,
+    "question": "What metadata should accompany a Driver photo?",
+    "choices": {
+      "A": "File only",
+      "B": "Shipment, uploader, type, timestamp, GPS if available and note",
+      "C": "Filename only",
+      "D": "Password"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 195,
+    "question": "What if Driver takes checkpoint photo while offline?",
+    "choices": {
+      "A": "Reject it",
+      "B": "Keep photo locally and queue metadata/upload for synchronization",
+      "C": "Upload without internet",
+      "D": "Discard image"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 196,
+    "question": "Should system compress large Driver photos before upload?",
+    "choices": {
+      "A": "No",
+      "B": "Yes; client-side resizing/compression for reasonable mobile size",
+      "C": "Convert to video",
+      "D": "Ask Admin"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 197,
+    "question": "Should a Driver be able to hard-delete evidence after uploading it?",
+    "choices": {
+      "A": "Yes permanently",
+      "B": "Prefer no hard delete; allow replace/archive while retaining audit metadata",
+      "C": "Trader deletes it",
+      "D": "Everyone can delete it"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 198,
+    "question": "What should happen when marking shipment DELIVERED?",
+    "choices": {
+      "A": "Status only",
+      "B": "Timestamp + GPS + delivery proof photo with optional note",
+      "C": "Admin approval every time",
+      "D": "Trader types delivered"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 199,
+    "question": "What if delivery-proof upload fails while Driver is offline?",
+    "choices": {
+      "A": "Delivery cannot be recorded",
+      "B": "Record pending delivery locally, queue proof upload and sync later",
+      "C": "Lose photo",
+      "D": "Somehow write to Supabase without internet"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 200,
+    "question": "Should you add OCR/document AI in V1?",
+    "choices": {
+      "A": "Yes, required",
+      "B": "No; reliable upload/display first, OCR future work",
+      "C": "Build OCR model",
+      "D": "Remove uploads"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 201,
+    "question": "What if OpenRouteService is unavailable during demo?",
+    "choices": {
+      "A": "Stop demo",
+      "B": "Fall back to cached/predefined route geometry",
+      "C": "Remove map",
+      "D": "Retry indefinitely"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 202,
+    "question": "What if Supabase Realtime stops working?",
+    "choices": {
+      "A": "Whole system fails",
+      "B": "Keep DB correct and allow polling/manual refresh fallback",
+      "C": "Pretend alerts worked",
+      "D": "Restart during presentation"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 203,
+    "question": "What if Supabase itself becomes unreachable?",
+    "choices": {
+      "A": "No fallback",
+      "B": "Keep seeded local/demo mode for golden-path scenario",
+      "C": "Switch databases live",
+      "D": "Rewrite backend"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 204,
+    "question": "What if Driver real GPS fails?",
+    "choices": {
+      "A": "Stop tracking",
+      "B": "Switch to simulated GPS without changing rest of app",
+      "C": "Enter every coordinate manually",
+      "D": "Mark delivered"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 205,
+    "question": "What if internet disconnects while Driver is travelling?",
+    "choices": {
+      "A": "Driver cannot do anything",
+      "B": "Continue GPS/status/reporting locally through IndexedDB and sync later",
+      "C": "Force logout",
+      "D": "Switch to Admin"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 206,
+    "question": "What if synchronization partially fails?",
+    "choices": {
+      "A": "Mark everything failed",
+      "B": "Sync each queued item independently and retry only failed items",
+      "C": "Delete queue",
+      "D": "Ask Driver to recreate"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 207,
+    "question": "What if same offline event accidentally syncs twice?",
+    "choices": {
+      "A": "Accept duplicate",
+      "B": "Use unique client_event_id/idempotency key",
+      "C": "Admin deletes duplicates later",
+      "D": "Ignore problem"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 208,
+    "question": "What if an AI-generated code change breaks the stable demo?",
+    "choices": {
+      "A": "Keep fixing directly on main",
+      "B": "Maintain known-good demo branch/tag and test changes before merge",
+      "C": "Delete Git history",
+      "D": "Ask AI to rewrite app"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 209,
+    "question": "What if live demo completely fails despite fallbacks?",
+    "choices": {
+      "A": "End presentation",
+      "B": "Have prerecorded golden-path demo as last-resort evidence",
+      "C": "Explain verbally for 15 minutes",
+      "D": "Show source code"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 210,
+    "question": "What should team test immediately before presenting?",
+    "choices": {
+      "A": "Individual components only",
+      "B": "Exact 15-minute golden path from login through delivery, including a failure scenario",
+      "C": "Only Admin dashboard",
+      "D": "Only pheromone algorithm"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 211,
+    "question": "How should the 5-minute Problem & Solution section be structured?",
+    "choices": {
+      "A": "Spend all 5 minutes on logistics history",
+      "B": "Problem → workflow pain → solution → differentiator → simple architecture/functional visual",
+      "C": "Start with DB schema",
+      "D": "Explain every feature"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 212,
+    "question": "Should you introduce the pheromone-route concept during first 5 minutes?",
+    "choices": {
+      "A": "Never mention it",
+      "B": "Yes, briefly as differentiator without algorithm deep dive",
+      "C": "Spend all 5 minutes on ant-colony optimization",
+      "D": "Present equations first"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 213,
+    "question": "How should the 15-minute live demo begin?",
+    "choices": {
+      "A": "Admin dashboard",
+      "B": "Trader creating a real transport request",
+      "C": "Code",
+      "D": "Supabase tables"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 214,
+    "question": "What should the 15-minute demo timeline be?",
+    "choices": {
+      "A": "Improvise",
+      "B": "Rehearse a tightly timed golden path",
+      "C": "Show every screen",
+      "D": "Each member demos separate feature"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 215,
+    "question": "Should you intentionally demonstrate offline mode?",
+    "choices": {
+      "A": "No, mention only",
+      "B": "Yes; deliberately go offline, create update/report, reconnect and sync",
+      "C": "Turn off all presentation internet",
+      "D": "Screenshot only"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 216,
+    "question": "How should five people divide speaking?",
+    "choices": {
+      "A": "Everyone exactly 6 minutes",
+      "B": "Clear subject ownership with one narrator maintaining continuity",
+      "C": "One person 30 minutes",
+      "D": "Everyone interrupts when their feature appears"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 217,
+    "question": "What should the 10-minute AI Engineering Reflection focus on?",
+    "choices": {
+      "A": "We used ChatGPT and saved time",
+      "B": "Actual AI workflow, prompts, failures, debugging, integration and architecture decisions",
+      "C": "Explain LLM math",
+      "D": "Show dozens of generated files"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 218,
+    "question": "Should you admit AI-generated failures?",
+    "choices": {
+      "A": "No; make everything perfect",
+      "B": "Yes; show 2–3 real meaningful failures and how you diagnosed/fixed them",
+      "C": "Blame AI for every bug",
+      "D": "Only successful prompts"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 219,
+    "question": "How much architecture should you show during reflection?",
+    "choices": {
+      "A": "Every class/column",
+      "B": "One clear architecture diagram; detailed ER/class only when supporting a point or Q&A",
+      "C": "No architecture",
+      "D": "Read code"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 220,
+    "question": "How should the presentation end?",
+    "choices": {
+      "A": "That is all",
+      "B": "Return to Myanmar logistics problem, summarize demonstrated value, state next validation step",
+      "C": "End with DB schema",
+      "D": "End with AI prompt"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 221,
+    "question": "Should your team save AI prompts during development?",
+    "choices": {
+      "A": "No",
+      "B": "Yes; save representative prompts, outputs, failures and corrections",
+      "C": "Only screenshots",
+      "D": "Recreate later from memory"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 222,
+    "question": "Which AI prompts are most worth saving?",
+    "choices": {
+      "A": "Every conversation",
+      "B": "Prompts that produced architecture, schema, UI, debugging and integration decisions",
+      "C": "Only perfect prompts",
+      "D": "Only short prompts"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 223,
+    "question": "What should a strong coding prompt contain?",
+    "choices": {
+      "A": "Build my logistics app",
+      "B": "Context + exact task + constraints + existing schema/API + expected output",
+      "C": "Only technology names",
+      "D": "Motivational instructions"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 224,
+    "question": "What kind of AI failure should you document?",
+    "choices": {
+      "A": "Only syntax errors",
+      "B": "Meaningful failures: invented APIs, wrong schema, security mistakes, integration mismatches",
+      "C": "Only funny hallucinations",
+      "D": "Do not document failures"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 225,
+    "question": "How should you show a hallucination in presentation?",
+    "choices": {
+      "A": "Read entire conversation",
+      "B": "Problem → bad assumption → symptom → correction → lesson",
+      "C": "Say AI hallucinated sometimes",
+      "D": "Blame tool"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 226,
+    "question": "Should AI-generated code be merged immediately?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; review, run, test, fix, then integrate",
+      "C": "Only frontend needs testing",
+      "D": "AI code assumed correct"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 227,
+    "question": "How should team measure whether AI helped?",
+    "choices": {
+      "A": "Claim 10x faster",
+      "B": "Use concrete observations of scaffolding/debugging gains and where manual review remained necessary",
+      "C": "No evidence needed",
+      "D": "Compare token counts"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 228,
+    "question": "Who should own the AI engineering log?",
+    "choices": {
+      "A": "Nobody",
+      "B": "Person 5 collects it; every member contributes examples",
+      "C": "Backend only",
+      "D": "Presenter invents later"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 229,
+    "question": "Should you show which AI tools each member used?",
+    "choices": {
+      "A": "No",
+      "B": "Yes, briefly, explaining what each was useful for",
+      "C": "Spend 5 minutes comparing brands",
+      "D": "Mention only ChatGPT regardless"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 230,
+    "question": "What should be the main conclusion of AI Engineering Reflection?",
+    "choices": {
+      "A": "AI replaces developers",
+      "B": "AI accelerated implementation, but architecture, contracts, verification, integration and testing required human control",
+      "C": "Best model built project automatically",
+      "D": "Prompt length determines quality"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 231,
+    "question": "What should be the team’s highest-priority test?",
+    "choices": {
+      "A": "Individual component tests only",
+      "B": "Full end-to-end shipment lifecycle across all roles",
+      "C": "Pheromone score only",
+      "D": "UI colors"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 232,
+    "question": "Should RBAC be tested only through UI?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; test UI visibility and backend authorization/RLS",
+      "C": "Backend only",
+      "D": "No tests needed"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 233,
+    "question": "What RBAC tests are mandatory?",
+    "choices": {
+      "A": "Successful login only",
+      "B": "Allowed and forbidden actions for all three roles",
+      "C": "Admin only",
+      "D": "Driver only"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 234,
+    "question": "How should shipment-state transitions be tested?",
+    "choices": {
+      "A": "Normal path only",
+      "B": "Normal, repeated, backward-valid and invalid transitions",
+      "C": "Let Driver type anything",
+      "D": "Only DELIVERED"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 235,
+    "question": "What should be the key offline synchronization test?",
+    "choices": {
+      "A": "Turn off Wi-Fi and stop",
+      "B": "Queue several action types, reconnect, verify each syncs exactly once",
+      "C": "Queue one text message",
+      "D": "Test IndexedDB separately only"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 236,
+    "question": "Should duplicate-sync protection be tested?",
+    "choices": {
+      "A": "No",
+      "B": "Yes; send same client_event_id twice and verify one logical event",
+      "C": "Delete duplicates manually",
+      "D": "Only after deployment"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 237,
+    "question": "How should route-learning tests work?",
+    "choices": {
+      "A": "Use simulation and let it confirm production routes",
+      "B": "Use controlled synthetic test data; production reinforcement still requires eligible real GPS traversals",
+      "C": "Manual only",
+      "D": "Skip tests"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 238,
+    "question": "What should happen in testing when conflicting gate reports arrive?",
+    "choices": {
+      "A": "Latest wins",
+      "B": "Verify incident becomes uncertain/conflicted while preserving evidence",
+      "C": "Delete both",
+      "D": "Block Drivers"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 239,
+    "question": "Who should own final acceptance testing?",
+    "choices": {
+      "A": "Person 5 alone",
+      "B": "Person 5 coordinates; all five run golden path at least once",
+      "C": "Backend only",
+      "D": "Presenter only"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 240,
+    "question": "What should qualify a build as demo-ready?",
+    "choices": {
+      "A": "It compiles",
+      "B": "Golden path passes repeatedly, RBAC/fallbacks work, no critical bugs remain",
+      "C": "UI looks good",
+      "D": "All planned features exist"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 241,
+    "question": "How should frontend be deployed?",
+    "choices": {
+      "A": "Run from developer laptop only",
+      "B": "Deploy React/Vite to Vercel with Git-based deployments",
+      "C": "Put React in FastAPI templates",
+      "D": "Send ZIP"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 242,
+    "question": "How should FastAPI be deployed?",
+    "choices": {
+      "A": "Same browser bundle",
+      "B": "Separate backend web service such as Render",
+      "C": "Person 3 laptop during presentation",
+      "D": "Supabase Storage"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 243,
+    "question": "How many environments should project have?",
+    "choices": {
+      "A": "Production only",
+      "B": "Local development + preview/test + stable demo/production",
+      "C": "One per person",
+      "D": "Ten"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 244,
+    "question": "Which Supabase key should React receive?",
+    "choices": {
+      "A": "Secret key",
+      "B": "Publishable key",
+      "C": "Database password",
+      "D": "Postgres admin credentials"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 245,
+    "question": "Where should Supabase secret key exist?",
+    "choices": {
+      "A": "React public env",
+      "B": "FastAPI/server environment only",
+      "C": "README",
+      "D": "Driver IndexedDB"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 246,
+    "question": "How should environment variables be handled in Git?",
+    "choices": {
+      "A": "Commit .env",
+      "B": "Commit .env.example; gitignore real envs; store deployed secrets in hosting dashboards",
+      "C": "Paste into JS",
+      "D": "Share screenshot"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 247,
+    "question": "Should demo mode use same mutable dataset as daily testing?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; maintain predictable seeded demo data that can be reset",
+      "C": "Random data",
+      "D": "Empty DB before presenting"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 248,
+    "question": "Should feature branches deploy automatically?",
+    "choices": {
+      "A": "No",
+      "B": "Yes; preview deployments for integration before stable merge",
+      "C": "Every branch replaces production",
+      "D": "Localhost only"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 249,
+    "question": "What if a secret key appears in Git or an AI prompt?",
+    "choices": {
+      "A": "Delete line and keep same key",
+      "B": "Treat as compromised: rotate/revoke, update envs and redeploy",
+      "C": "Rename variable",
+      "D": "Hide repository"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 250,
+    "question": "What should final deployment topology be?",
+    "choices": {
+      "A": "Everything on one laptop",
+      "B": "Vercel React + Render FastAPI + Supabase + ORS + Device GPS + IndexedDB",
+      "C": "Five independent deployments",
+      "D": "Supabase only"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 251,
+    "question": "Should profiles duplicate authentication credentials?",
+    "choices": {
+      "A": "Yes, store passwords again",
+      "B": "No; Supabase Auth owns auth, profiles stores app identity/role",
+      "C": "No profile table",
+      "D": "Store passwords in FastAPI"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 252,
+    "question": "What should final shipments table contain?",
+    "choices": {
+      "A": "Every event/GPS point",
+      "B": "Current shipment state and references to related entities",
+      "C": "Only tracking number",
+      "D": "Giant JSON field"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 253,
+    "question": "What should shipment status enums be?",
+    "choices": {
+      "A": "Free text",
+      "B": "Fixed lifecycle enum plus separate delay state",
+      "C": "One complete boolean",
+      "D": "AI invents statuses"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 254,
+    "question": "What belongs in shipment_events?",
+    "choices": {
+      "A": "Only status names",
+      "B": "Immutable-ish operational history: status changes, reroutes, checkpoints, delivery etc.",
+      "C": "User profiles",
+      "D": "Current route geometry"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 255,
+    "question": "What should routes represent?",
+    "choices": {
+      "A": "One specific Driver journey only",
+      "B": "Reusable route knowledge",
+      "C": "Just ORS URLs",
+      "D": "Gate reports"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 256,
+    "question": "How should route geometry and actual journeys be separated?",
+    "choices": {
+      "A": "Put everything in routes",
+      "B": "route_points stores geometry; route_traversals stores individual journeys",
+      "C": "Screenshots",
+      "D": "No geometry history"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 257,
+    "question": "Should gates and incidents be one table?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; gates represent locations, incidents represent changing conditions",
+      "C": "Only incidents",
+      "D": "Only gates"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 258,
+    "question": "What should gate_reports contain?",
+    "choices": {
+      "A": "Only blocked=true",
+      "B": "Individual Driver observations linked to gate/incident when possible",
+      "C": "Official gate state only",
+      "D": "Trader alerts"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 259,
+    "question": "What should final alerts and documents tables look like?",
+    "choices": {
+      "A": "Minimal text only",
+      "B": "Structured records linked to shipment/route/incident/user context",
+      "C": "React state only",
+      "D": "One table for both"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 260,
+    "question": "Should offline-queue records be stored in Supabase as the primary queue?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; pending queue lives in Driver IndexedDB, server stores synchronized records and client_event_id",
+      "C": "FastAPI RAM only",
+      "D": "Nowhere"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 261,
+    "question": "How should authentication work between React and FastAPI?",
+    "choices": {
+      "A": "Send username/password to every endpoint",
+      "B": "Supabase login → access token → FastAPI validates token and resolves role",
+      "C": "FastAPI trusts user_id from React",
+      "D": "No auth"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 262,
+    "question": "What should shipment endpoints look like?",
+    "choices": {
+      "A": "One shipment-action endpoint",
+      "B": "REST-style endpoints with clear responsibilities",
+      "C": "Direct SQL from every screen",
+      "D": "One endpoint per button"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 263,
+    "question": "Who should GET /shipments return data for?",
+    "choices": {
+      "A": "Everyone gets everything",
+      "B": "Response is restricted by authenticated role",
+      "C": "React filters unauthorized records",
+      "D": "Only Admin can use it"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 264,
+    "question": "How should Driver location updates work?",
+    "choices": {
+      "A": "One endpoint every second",
+      "B": "Batch location endpoint",
+      "C": "Manual shipment updates",
+      "D": "Coordinates in alerts"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 265,
+    "question": "What endpoint should create checkpoint/gate observations?",
+    "choices": {
+      "A": "/update-route",
+      "B": "POST /gate-reports",
+      "C": "/admin/gates/change",
+      "D": "Put reports inside shipment status"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 266,
+    "question": "How should Admin review reports?",
+    "choices": {
+      "A": "Modify DB directly",
+      "B": "Dedicated list/review endpoints for accept/reject/merge and overrides",
+      "C": "Delete manually",
+      "D": "React sets verified=true directly"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 267,
+    "question": "How should Driver rerouting work?",
+    "choices": {
+      "A": "Admin endpoint only",
+      "B": "Assigned Driver calls reroute endpoint with selected route/reason",
+      "C": "Trader changes route",
+      "D": "React modifies DB row directly"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 268,
+    "question": "What if Driver is following a completely new/unmapped path?",
+    "choices": {
+      "A": "Reroute cannot handle it",
+      "B": "Create/finalize an observed route from breadcrumb data",
+      "C": "Require ORS route ID",
+      "D": "Ask Admin to draw it"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 269,
+    "question": "Where should route confidence logic be exposed?",
+    "choices": {
+      "A": "Driver sends confidence values",
+      "B": "Backend calculates and frontend receives score + explanation/reasons",
+      "C": "React calculates everything",
+      "D": "Admin types score"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 270,
+    "question": "What should API return when something fails?",
+    "choices": {
+      "A": "\"error\" for everything",
+      "B": "Consistent structured error responses with stable error codes",
+      "C": "HTML error pages",
+      "D": "Empty response"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 271,
+    "question": "What should happen immediately after login?",
+    "choices": {
+      "A": "Everyone same dashboard",
+      "B": "Redirect based on role",
+      "C": "User chooses role manually",
+      "D": "Always Admin"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 272,
+    "question": "What should shared application shell contain?",
+    "choices": {
+      "A": "Completely different layout for each role",
+      "B": "Shared header/navigation shell with role-specific menus",
+      "C": "No navigation",
+      "D": "Twenty menu items"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 273,
+    "question": "What should Admin navigation contain?",
+    "choices": {
+      "A": "15 sections",
+      "B": "Dashboard, Shipments, Operations Map, Incidents/Gates, Broadcast Alerts",
+      "C": "Database editor",
+      "D": "Dashboard only"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 274,
+    "question": "What should Trader navigation contain?",
+    "choices": {
+      "A": "Everything Admin sees",
+      "B": "Dashboard, My Shipments, Alerts",
+      "C": "Gate management",
+      "D": "Driver management"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 275,
+    "question": "What should Driver navigation look like?",
+    "choices": {
+      "A": "Desktop sidebar with many sections",
+      "B": "Mobile-first Current Trip, Map, Report, Sync",
+      "C": "Same as Admin",
+      "D": "No navigation"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 276,
+    "question": "What components should shared Shipment Detail page have?",
+    "choices": {
+      "A": "One giant component",
+      "B": "Reusable ShipmentHeader, map, timeline, route summary, alerts, documents, Driver info",
+      "C": "Separate page per status",
+      "D": "Plain JSON"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 277,
+    "question": "Should three role maps be separate implementations?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; one shared LogisticsMap with role/layer configuration",
+      "C": "Only Admin map reusable",
+      "D": "Only Driver gets routing"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 278,
+    "question": "What should Driver CurrentTrip screen contain?",
+    "choices": {
+      "A": "Map only",
+      "B": "Shipment summary + map + status + key actions + connectivity/sync status",
+      "C": "Analytics",
+      "D": "Admin approval queue"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 279,
+    "question": "How should alerts appear in UI?",
+    "choices": {
+      "A": "Popups only",
+      "B": "Notification badge + persistent alert history + relevant inline warnings",
+      "C": "Email only",
+      "D": "Map markers only"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 280,
+    "question": "How should frontend loading/error/offline states be handled?",
+    "choices": {
+      "A": "Ignore them",
+      "B": "Every important component supports loading, empty, error and offline states",
+      "C": "Reload browser on error",
+      "D": "Display stack traces"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 281,
+    "question": "Should all five people start coding different features immediately?",
+    "choices": {
+      "A": "Yes",
+      "B": "No; first freeze diagrams, schema, API contract, statuses, RBAC and golden path",
+      "C": "Only backend starts",
+      "D": "Only frontend starts"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 282,
+    "question": "What should Person 1 own during implementation?",
+    "choices": {
+      "A": "Write most code",
+      "B": "Product/integration control, contracts, scope, demo story and unblocking",
+      "C": "Maps only",
+      "D": "Slides only"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 283,
+    "question": "What is Person 2 implementation sequence?",
+    "choices": {
+      "A": "Polish animations first",
+      "B": "Shared UI → Trader → Admin → realtime/alerts → polish",
+      "C": "Admin analytics first",
+      "D": "Learn FastAPI"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 284,
+    "question": "What is Person 3 implementation sequence?",
+    "choices": {
+      "A": "Pheromone first",
+      "B": "Supabase/Auth → schema → FastAPI core → RBAC → incidents → alerts → advanced routing",
+      "C": "Deployment first",
+      "D": "Presentation first"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 285,
+    "question": "What is Person 4 implementation sequence?",
+    "choices": {
+      "A": "Ant algorithm first",
+      "B": "Map → simulation → live GPS → reports → offline → observed routes → recommendations",
+      "C": "Slides first",
+      "D": "Supabase auth"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 286,
+    "question": "What is Person 5 implementation sequence?",
+    "choices": {
+      "A": "Wait until development finishes",
+      "B": "QA from day one + demo data + AI log + presentation assets",
+      "C": "Only slides",
+      "D": "Only unit tests"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 287,
+    "question": "What should be first shared integration milestone?",
+    "choices": {
+      "A": "Full system",
+      "B": "Trader creates shipment → Admin sees/assigns → Driver sees it",
+      "C": "AI recommendation",
+      "D": "Offline photos"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 288,
+    "question": "What should be second integration milestone?",
+    "choices": {
+      "A": "Presentation slides",
+      "B": "Driver movement → map updates → Trader/Admin tracking",
+      "C": "Pheromone decay",
+      "D": "OCR"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 289,
+    "question": "What should be third integration milestone?",
+    "choices": {
+      "A": "Full route learning",
+      "B": "Checkpoint report → incident → alert → reroute → offline synchronization",
+      "C": "Analytics",
+      "D": "Presentation graphics"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 290,
+    "question": "When should pheromone/learned-route feature be integrated?",
+    "choices": {
+      "A": "Before shipment creation",
+      "B": "Only after core handoff, tracking, disruption/offline and delivery are reliable",
+      "C": "Never",
+      "D": "With authentication"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 291,
+    "question": "When is the project considered functionally complete?",
+    "choices": {
+      "A": "When every planned feature exists",
+      "B": "When required golden path works end-to-end and assignment requirements are demonstrated",
+      "C": "When pheromone system is perfect",
+      "D": "When UI is polished"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 292,
+    "question": "What core assignment features must be demonstrated?",
+    "choices": {
+      "A": "Only shipment tracking",
+      "B": "RBAC + three roles + shipment timeline + GPS map + gate/route handling + alerts + offline + Driver photo upload",
+      "C": "Pheromone only",
+      "D": "Architecture diagrams only"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 293,
+    "question": "What optional feature should be considered the main differentiator?",
+    "choices": {
+      "A": "Dashboard animations",
+      "B": "Driver-observed routes + pheromone-inspired route reinforcement",
+      "C": "Dark mode",
+      "D": "OCR"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 294,
+    "question": "When is documentation considered complete?",
+    "choices": {
+      "A": "README only",
+      "B": "Architecture + functional + use-case + ER + class + API + schema + RBAC + testing + AI log + demo script",
+      "C": "No docs",
+      "D": "Screenshots only"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 295,
+    "question": "What must pass before you freeze demo build?",
+    "choices": {
+      "A": "Application opens",
+      "B": "Golden path passes at least three consecutive rehearsals without critical failure",
+      "C": "Backend developer says it works",
+      "D": "One successful test"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 296,
+    "question": "What fallbacks must be ready before presenting?",
+    "choices": {
+      "A": "None",
+      "B": "Cached route + simulated GPS + offline/demo data + realtime refresh fallback + prerecorded emergency demo",
+      "C": "Homepage screenshot only",
+      "D": "Another laptop with different code"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 297,
+    "question": "What should be finished for AI Engineering Reflection?",
+    "choices": {
+      "A": "List AI tools only",
+      "B": "Real examples of prompts, generated output, mistakes, fixes and lessons",
+      "C": "Explain LLMs",
+      "D": "Say AI saved time"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 298,
+    "question": "What must every one of the five members know before presentation day?",
+    "choices": {
+      "A": "Only personal feature",
+      "B": "Overall architecture, golden demo story, speaking part and basic recovery procedure",
+      "C": "Every line of code",
+      "D": "Slides only"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 299,
+    "question": "When should you stop adding features?",
+    "choices": {
+      "A": "Five minutes before presentation",
+      "B": "Once required features are reliable and new changes threaten stability more than value",
+      "C": "Never",
+      "D": "After implementing all 300 ideas"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  },
+  {
+    "n": 300,
+    "question": "What is the final definition of success?",
+    "choices": {
+      "A": "Maximum feature count",
+      "B": "A coherent, working Myanmar-focused prototype demonstrating required workflow, surviving live demo and explaining AI engineering",
+      "C": "Best-looking dashboard",
+      "D": "Most complicated algorithm"
+    },
+    "recommendation": "B",
+    "final": "B",
+    "note": ""
+  }
+]

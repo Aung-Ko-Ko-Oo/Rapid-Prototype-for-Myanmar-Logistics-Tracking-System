@@ -1,0 +1,17 @@
+erDiagram
+  PROFILES ||--o{ SHIPMENTS : "trader/driver"
+  PROFILES ||--o{ SHIPMENT_EVENTS : creates
+  PROFILES ||--o{ GATE_REPORTS : reports
+  PROFILES ||--o{ ALERTS : receives
+  PROFILES ||--o{ DOCUMENTS : uploads
+  SHIPMENTS ||--o{ SHIPMENT_EVENTS : has
+  SHIPMENTS ||--o{ DOCUMENTS : has
+  SHIPMENTS ||--o{ GATE_REPORTS : context
+  SHIPMENTS ||--o{ ROUTE_TRAVERSALS : has
+  ROUTES ||--o{ ROUTE_POINTS : geometry
+  ROUTES ||--o{ ROUTE_TRAVERSALS : evidence
+  ROUTES ||--o{ INCIDENTS : affected_by
+  GATES ||--o{ INCIDENTS : has
+  GATES ||--o{ GATE_REPORTS : observed_at
+  INCIDENTS ||--o{ GATE_REPORTS : aggregates
+  INCIDENTS ||--o{ ALERTS : triggers

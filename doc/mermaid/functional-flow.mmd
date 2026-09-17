@@ -1,0 +1,20 @@
+flowchart TD
+  T[Trader creates shipment] --> A[Admin assigns Driver + initial route]
+  A --> S[Driver starts trip]
+  S --> G[GPS updates map + timeline]
+  G --> C{Unexpected checkpoint?}
+  C -- No --> G
+  C -- Yes --> O{Online?}
+  O -- Yes --> R[Submit gate report]
+  O -- No --> I[Queue in IndexedDB]
+  I --> X[Reconnect + idempotent sync]
+  X --> R
+  R --> E[Incident engine aggregates evidence]
+  E --> V{Confirmed / uncertain?}
+  V --> AL[Relevant alerts + map updates]
+  AL --> RR[Driver chooses route]
+  RR --> U{Known route?}
+  U -- Yes --> G
+  U -- No --> OBS[Record Driver-observed breadcrumbs]
+  OBS --> G
+  G --> DEL[Driver uploads proof + marks Delivered]

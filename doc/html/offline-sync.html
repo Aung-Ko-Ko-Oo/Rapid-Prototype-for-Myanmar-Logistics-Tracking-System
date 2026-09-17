@@ -1,0 +1,13 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Offline Sync</title><style>body{font-family:Arial,sans-serif;margin:0;padding:24px;background:#f7f7f8;color:#161616}main{max-width:1200px;margin:auto;background:white;padding:24px;border-radius:12px;box-shadow:0 1px 8px #0001}pre.mermaid{overflow:auto}</style></head><body><main><h1>Offline Sync</h1><pre class="mermaid">flowchart TD
+  A[Driver action / GPS / photo] --> N{Online?}
+  N -- Yes --> API[FastAPI]
+  N -- No --> IDB[(IndexedDB)]
+  IDB --> Q[Queue item with client_event_id]
+  Q --> C{Connection restored?}
+  C -- No --> Q
+  C -- Yes --> API
+  API --> V[Validate + authorize + deduplicate]
+  V --> DB[(Supabase)]
+  DB --> OK[Mark local item SYNCED]
+  V -->|item fails| F[Mark FAILED; retry independently]
+</pre></main><script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';mermaid.initialize({startOnLoad:true,securityLevel:'loose'});</script></body></html>

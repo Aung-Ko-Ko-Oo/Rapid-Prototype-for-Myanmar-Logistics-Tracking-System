@@ -1,0 +1,13 @@
+flowchart LR
+  GH[Git Repository] --> V[Vercel: React/Vite]
+  GH --> R[Render: FastAPI]
+  V -->|HTTPS| R
+  V -->|Auth / Realtime| S[Supabase]
+  R --> S
+  S --> DB[(PostgreSQL)]
+  S --> ST[Private Storage]
+  S --> AU[Auth]
+  R --> ORS[OpenRouteService]
+  DR[Driver Device] --> GPS[Live GPS]
+  DR --> IDB[(IndexedDB)]
+  IDB --> R

@@ -1,0 +1,12 @@
+flowchart TD
+  A[Driver action / GPS / photo] --> N{Online?}
+  N -- Yes --> API[FastAPI]
+  N -- No --> IDB[(IndexedDB)]
+  IDB --> Q[Queue item with client_event_id]
+  Q --> C{Connection restored?}
+  C -- No --> Q
+  C -- Yes --> API
+  API --> V[Validate + authorize + deduplicate]
+  V --> DB[(Supabase)]
+  DB --> OK[Mark local item SYNCED]
+  V -->|item fails| F[Mark FAILED; retry independently]

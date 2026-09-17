@@ -1,0 +1,17 @@
+flowchart TD
+  A[Driver leaves known route] --> B[Record live GPS breadcrumbs]
+  B --> C[Complete traversal]
+  C --> D{Valid LIVE_GPS + coverage?}
+  D -- No --> X[Store history only]
+  D -- Yes --> R[Create/reuse DRIVER_OBSERVED route]
+  R --> S[+10 successful traversal]
+  S --> U{New unique Driver?}
+  U -- Yes --> V[+10 diversity bonus]
+  U -- No --> W[No diversity bonus]
+  V --> T{confidence >= 50 and >=2 unique Drivers?}
+  W --> T
+  T -- Yes --> CF[CONFIRMED]
+  T -- No --> UC[UNCONFIRMED]
+  CF --> P[Recommendation engine]
+  UC --> P
+  P --> DRI[Driver decides]

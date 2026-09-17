@@ -1,0 +1,129 @@
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Inter, ui-sans-serif, system-ui, sans-serif","fontSize":"14px","primaryTextColor":"#0f172a","lineColor":"#64748b","primaryColor":"#ffffff","primaryBorderColor":"#94a3b8"}}}%%
+classDiagram
+  direction LR
+
+  class Shipment {
+    +UUID id
+    +ShipmentStatus currentStatus
+    +DelayStatus delayStatus
+    +UUID traderId
+    +UUID driverId
+    +UUID activeRouteId
+    +assignDriver(driverId)
+    +updateStatus(status)
+    +reroute(routeId, reason)
+    +markDelivered(proof)
+  }
+
+  class Route {
+    +UUID id
+    +RouteSource source
+    +TrustStatus trustStatus
+    +OperationalStatus operationalStatus
+    +int confidenceScore
+    +reinforce(traversal)
+    +penalize(incident)
+    +applyDecay(now)
+  }
+
+  class Incident {
+    +UUID id
+    +IncidentState state
+    +Severity severity
+    +float confidence
+    +addReport(report)
+    +recalculateConsensus()
+    +manualOverride(state)
+    +resolve()
+  }
+
+  class GateReport {
+    +UUID id
+    +Condition condition
+    +GeoPoint location
+    +DateTime reportedAt
+    +VerificationStatus verificationStatus
+  }
+
+  class RouteTraversal {
+    +UUID id
+    +LocationSource source
+    +float coverageRatio
+    +bool successful
+    +bool eligibleForReinforcement
+    +validate()
+  }
+
+  class Alert {
+    +UUID id
+    +Severity severity
+    +bool isRead
+    +markRead()
+  }
+
+  class Document {
+    +UUID id
+    +DocumentType type
+    +string filePath
+    +GeoPoint captureLocation
+  }
+
+  class ShipmentService {
+    +createShipment()
+    +assignDriver()
+    +changeStatus()
+    +reroute()
+    +deliver()
+  }
+  class IncidentService {
+    +submitReport()
+    +mergeNearbyReport()
+    +evaluateConsensus()
+    +resolveFromClearEvidence()
+  }
+  class RoutingService {
+    +getCandidates()
+    +createObservedRoute()
+    +rankRecommendations()
+  }
+  class RouteConfidenceService {
+    +reinforce()
+    +penalize()
+    +applyDecay()
+    +autoConfirm()
+  }
+  class OfflineSyncService {
+    +syncQueue()
+    +deduplicate(clientEventId)
+    +retryFailed()
+  }
+  class AlertService {
+    +createForAffectedUsers()
+    +broadcast()
+  }
+  class LocationProvider {
+    <<interface>>
+    +start()
+    +stop()
+    +getPosition()
+  }
+  class LiveGPSProvider
+  class SimulationProvider
+
+  Shipment --> Route : active route
+  Shipment --> Alert : produces context
+  Shipment --> Document : contains
+  Route --> RouteTraversal : evidence
+  Incident --> GateReport : aggregates
+  Incident --> Route : affects
+  ShipmentService --> Shipment
+  IncidentService --> Incident
+  RoutingService --> Route
+  RouteConfidenceService --> Route
+  RouteConfidenceService --> RouteTraversal
+  AlertService --> Alert
+  OfflineSyncService --> ShipmentService
+  OfflineSyncService --> IncidentService
+  OfflineSyncService --> RoutingService
+  LocationProvider <|.. LiveGPSProvider
+  LocationProvider <|.. SimulationProvider

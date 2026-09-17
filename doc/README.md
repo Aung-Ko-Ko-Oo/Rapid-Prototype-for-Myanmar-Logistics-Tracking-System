@@ -10,3 +10,8 @@ Start with:
 5. `Myanmar_Logistics_Project_Master_Documentation.docx` for the consolidated Word document.
 
 The pack clearly distinguishes assignment requirements from team extensions such as real GPS, Driver-controlled rerouting and pheromone-inspired learned routes.
+
+
+## Polished Diagram Set v2
+
+The original Mermaid set has been replaced with 15 polished diagrams. See `DIAGRAM_CATALOG.md`, `DIAGRAM_STYLE_GUIDE.md`, `mermaid/`, and `html/`.

@@ -1,0 +1,44 @@
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif","fontSize":"15px","primaryTextColor":"#0f172a","lineColor":"#64748b","primaryColor":"#ffffff","primaryBorderColor":"#94a3b8","tertiaryColor":"#f8fafc"}}}%%
+stateDiagram-v2
+  [*] --> ONLINE
+
+  state ONLINE {
+    [*] --> Connected
+    Connected --> Connected: GPS / status / reports sent normally
+  }
+
+  ONLINE --> OFFLINE: network lost
+
+  state OFFLINE {
+    [*] --> Capture
+    Capture --> QueueItem: Driver action / GPS batch / photo
+    QueueItem --> Pending: save payload + client_event_id in IndexedDB
+    Pending --> Pending: more offline actions
+  }
+
+  OFFLINE --> RECONNECTING: network restored
+
+  state RECONNECTING {
+    [*] --> Syncing
+    Syncing --> Deduplicate: send next queued item
+    Deduplicate --> Synced: server accepts or existing client_event_id found
+    Deduplicate --> Failed: validation / upload / network error
+    Failed --> PendingRetry: preserve item + error
+    PendingRetry --> Syncing: retry eligible item
+    Synced --> Syncing: more queued items
+    Synced --> [*]: queue empty
+  }
+
+  RECONNECTING --> ONLINE: queue drained / normal operation resumes
+
+  note right of OFFLINE
+    Driver remains operational.
+    GPS can continue without mobile data.
+    Each item syncs independently.
+  end note
+
+  note right of RECONNECTING
+    Queue states:
+    PENDING → SYNCING → SYNCED
+                    ↘ FAILED → RETRY
+  end note

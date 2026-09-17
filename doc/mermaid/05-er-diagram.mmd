@@ -1,0 +1,133 @@
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Inter, ui-sans-serif, system-ui, sans-serif","fontSize":"14px","primaryTextColor":"#0f172a","lineColor":"#64748b","primaryColor":"#ffffff","primaryBorderColor":"#94a3b8","tertiaryColor":"#f8fafc"}}}%%
+erDiagram
+    PROFILE ||--o{ SHIPMENT : "trader creates"
+    PROFILE ||--o{ SHIPMENT : "driver assigned"
+    PROFILE ||--o{ SHIPMENT_EVENT : creates
+    PROFILE ||--o{ GATE_REPORT : reports
+    PROFILE ||--o{ ALERT : receives
+    PROFILE ||--o{ DOCUMENT : uploads
+
+    ROUTE ||--o{ ROUTE_POINT : contains
+    ROUTE ||--o{ ROUTE_TRAVERSAL : "evidenced by"
+    ROUTE ||--o{ INCIDENT : affected_by
+    ROUTE ||--o{ SHIPMENT : "active route"
+
+    SHIPMENT ||--o{ SHIPMENT_EVENT : history
+    SHIPMENT ||--o{ ROUTE_TRAVERSAL : journeys
+    SHIPMENT ||--o{ GATE_REPORT : context
+    SHIPMENT ||--o{ ALERT : triggers
+    SHIPMENT ||--o{ DOCUMENT : evidence
+
+    GATE ||--o{ INCIDENT : location
+    GATE ||--o{ GATE_REPORT : observations
+    INCIDENT ||--o{ GATE_REPORT : aggregates
+    INCIDENT ||--o{ ALERT : generates
+
+    PROFILE {
+      uuid id PK
+      text full_name
+      enum role
+      text phone
+      boolean is_active
+    }
+    SHIPMENT {
+      uuid id PK
+      text tracking_number UK
+      uuid trader_id FK
+      uuid driver_id FK
+      uuid active_route_id FK
+      enum current_status
+      enum delay_status
+      decimal current_lat
+      decimal current_lng
+      timestamptz delivered_at
+    }
+    SHIPMENT_EVENT {
+      uuid id PK
+      uuid shipment_id FK
+      enum event_type
+      text previous_status
+      text new_status
+      uuid created_by FK
+      text client_event_id UK
+      jsonb metadata
+      timestamptz created_at
+    }
+    ROUTE {
+      uuid id PK
+      text name
+      enum source
+      enum trust_status
+      enum operational_status
+      int confidence_score
+      int successful_trip_count
+      int unique_driver_count
+      timestamptz last_successful_trip_at
+    }
+    ROUTE_POINT {
+      uuid id PK
+      uuid route_id FK
+      int sequence
+      decimal latitude
+      decimal longitude
+    }
+    ROUTE_TRAVERSAL {
+      uuid id PK
+      uuid route_id FK
+      uuid shipment_id FK
+      uuid driver_id FK
+      enum location_source
+      boolean successful
+      boolean eligible_for_reinforcement
+      decimal coverage_ratio
+    }
+    GATE {
+      uuid id PK
+      text name
+      enum gate_type
+      decimal latitude
+      decimal longitude
+      boolean verified
+      timestamptz archived_at
+    }
+    INCIDENT {
+      uuid id PK
+      uuid gate_id FK
+      uuid route_id FK
+      enum incident_type
+      enum state
+      enum severity
+      decimal confidence
+      boolean admin_override
+    }
+    GATE_REPORT {
+      uuid id PK
+      uuid incident_id FK
+      uuid gate_id FK
+      uuid shipment_id FK
+      uuid driver_id FK
+      enum reported_condition
+      enum verification_status
+      text client_event_id UK
+      timestamptz reported_at
+    }
+    ALERT {
+      uuid id PK
+      uuid user_id FK
+      uuid shipment_id FK
+      uuid route_id FK
+      uuid incident_id FK
+      enum severity
+      boolean is_read
+      timestamptz created_at
+    }
+    DOCUMENT {
+      uuid id PK
+      uuid shipment_id FK
+      uuid uploaded_by FK
+      enum document_type
+      text file_path
+      decimal latitude
+      decimal longitude
+      text client_event_id UK
+    }

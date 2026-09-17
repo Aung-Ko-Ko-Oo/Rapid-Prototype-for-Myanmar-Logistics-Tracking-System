@@ -1,0 +1,45 @@
+%%{init: {"theme":"base","flowchart":{"curve":"basis","htmlLabels":true,"nodeSpacing":34,"rankSpacing":46},"themeVariables":{"fontFamily":"Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif","fontSize":"15px","primaryTextColor":"#0f172a","lineColor":"#64748b","clusterBkg":"#f8fafc","clusterBorder":"#cbd5e1","edgeLabelBackground":"#ffffff","tertiaryColor":"#f8fafc"}}}%%
+flowchart TD
+  START(["Trader needs cargo moved"]):::trader
+  CREATE["Create shipment request"]:::trader
+  ASSIGN["Admin reviews & assigns Driver + initial route"]:::admin
+  ACCEPT["Driver receives trip & starts journey"]:::driver
+  TRACK["GPS / simulator updates truck position<br/>Timeline visible to all permitted roles"]:::driver
+  ISSUE{{"Unexpected checkpoint / route problem?"}}:::warn
+  ONLINE{{"Internet available?"}}:::offline
+  REPORT["Capture GPS + condition + note + optional photo"]:::driver
+  CACHE["Queue report / GPS / photo in IndexedDB"]:::offline
+  SYNC["Reconnect → idempotent sync"]:::offline
+  INCIDENT["Aggregate field reports into incident state<br/>Pending • Confirmed • Uncertain • Resolved"]:::warn
+  ALERT["Notify affected Trader & Admin<br/>Update all role maps"]:::warn
+  ROUTE{{"Current route still usable?"}}:::driver
+  CHOOSE["Driver chooses alternate or unmapped path<br/>No routine Admin approval"]:::driver
+  OBS["Record observed GPS trail<br/>DRIVER_OBSERVED route"]:::adaptive
+  REINFORCE["Valid successful traversals reinforce confidence<br/>Independent Drivers can auto-confirm"]:::adaptive
+  CONT["Continue shipment<br/>Checkpoint ↔ In Transit ↔ Customs"]:::driver
+  DELIVER["Mark Delivered<br/>timestamp + GPS + proof photo"]:::driver
+  DONE(["Trader sees Delivered + proof"]):::success
+
+  START --> CREATE --> ASSIGN --> ACCEPT --> TRACK --> ISSUE
+  ISSUE -- "No" --> CONT
+  ISSUE -- "Yes" --> REPORT --> ONLINE
+  ONLINE -- "Yes" --> INCIDENT
+  ONLINE -- "No" --> CACHE --> SYNC --> INCIDENT
+  INCIDENT --> ALERT --> ROUTE
+  ROUTE -- "Yes" --> CONT
+  ROUTE -- "No / Driver chooses detour" --> CHOOSE --> OBS --> CONT
+  CONT --> DELIVER --> DONE
+  DELIVER --> REINFORCE
+  OBS -. "future reuse" .-> REINFORCE
+
+classDef admin fill:#eef2ff,stroke:#4f46e5,color:#312e81,stroke-width:2px;
+classDef trader fill:#ecfeff,stroke:#0f766e,color:#134e4a,stroke-width:2px;
+classDef driver fill:#fffbeb,stroke:#d97706,color:#78350f,stroke-width:2px;
+classDef core fill:#f1f5f9,stroke:#334155,color:#0f172a,stroke-width:2px;
+classDef data fill:#ecfdf5,stroke:#16a34a,color:#14532d,stroke-width:2px;
+classDef external fill:#eff6ff,stroke:#2563eb,color:#1e3a8a,stroke-width:2px;
+classDef offline fill:#fff7ed,stroke:#ea580c,color:#7c2d12,stroke-width:2px;
+classDef warn fill:#fef2f2,stroke:#dc2626,color:#7f1d1d,stroke-width:2px;
+classDef adaptive fill:#f5f3ff,stroke:#7c3aed,color:#4c1d95,stroke-width:2px;
+classDef success fill:#f0fdf4,stroke:#22c55e,color:#14532d,stroke-width:2px;
+classDef muted fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-width:1.5px;

@@ -1,0 +1,91 @@
+%%{init: {"theme":"base","flowchart":{"curve":"basis","htmlLabels":true,"nodeSpacing":34,"rankSpacing":46},"themeVariables":{"fontFamily":"Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif","fontSize":"15px","primaryTextColor":"#0f172a","lineColor":"#64748b","clusterBkg":"#f8fafc","clusterBorder":"#cbd5e1","edgeLabelBackground":"#ffffff","tertiaryColor":"#f8fafc"}}}%%
+flowchart TB
+  subgraph UX["ROLE EXPERIENCES · React / Vite / Tailwind"]
+    direction LR
+    ADM["Admin Web<br/>Dashboard • operations map • incidents • broadcast"]:::admin
+    TRD["Trader Web<br/>Requests • own shipments • alerts • proof"]:::trader
+    DRV["Driver Mobile Web<br/>Current trip • map • report • route • sync"]:::driver
+  end
+
+  subgraph FE["FRONTEND APPLICATION"]
+    direction LR
+    SHELL["AppShell + Role Router"]:::core
+    MAP["Shared LogisticsMap<br/>role-specific layers"]:::core
+    AUTHC["Supabase Auth Client"]:::data
+    RT["Realtime Subscriptions"]:::data
+    LOC["LocationProvider<br/>LiveGPS | Simulator"]:::external
+    QUEUE["IndexedDB Offline Queue<br/>GPS • status • reports • photos • delivery"]:::offline
+  end
+
+  subgraph API["FASTAPI · APPLICATION CORE"]
+    direction LR
+    AUTH["Auth / RBAC Guard"]:::core
+    SHIP["Shipment Service"]:::core
+    INC["Incident Consensus Engine"]:::warn
+    ALERT["Alert Service"]:::core
+    ROUTE["Routing Service"]:::core
+    CONF["Route Confidence Engine"]:::adaptive
+    DOC["Document Service"]:::core
+    SYNC["Offline Sync / Idempotency"]:::offline
+  end
+
+  subgraph DB["SUPABASE"]
+    direction LR
+    SAUTH["Auth"]:::data
+    PG["PostgreSQL<br/>system of record"]:::data
+    STORE["Private Storage"]:::data
+    SRT["Realtime"]:::data
+  end
+
+  subgraph EXT["EXTERNAL / DEVICE"]
+    direction LR
+    ORS["OpenRouteService"]:::external
+    GPS["Device GPS"]:::external
+    CAMERA["Camera / Files"]:::external
+  end
+
+  ADM --> SHELL
+  TRD --> SHELL
+  DRV --> SHELL
+  SHELL --> MAP
+  SHELL --> AUTHC
+  SHELL --> RT
+  DRV --> LOC
+  DRV --> QUEUE
+  GPS --> LOC
+  CAMERA --> DRV
+
+  SHELL -->|"HTTPS + Bearer token"| AUTH
+  QUEUE -->|"reconnect / batch sync"| SYNC
+  AUTH --> SHIP
+  AUTH --> INC
+  AUTH --> ALERT
+  AUTH --> ROUTE
+  AUTH --> DOC
+  SYNC --> SHIP
+  SYNC --> INC
+  SYNC --> DOC
+  SHIP --> PG
+  INC --> PG
+  ALERT --> PG
+  ROUTE --> PG
+  CONF --> PG
+  DOC --> PG
+  DOC --> STORE
+  AUTH <--> SAUTH
+  ALERT --> SRT
+  SRT --> RT
+  ROUTE <-->|"geometry / alternatives"| ORS
+  ROUTE --> CONF
+
+classDef admin fill:#eef2ff,stroke:#4f46e5,color:#312e81,stroke-width:2px;
+classDef trader fill:#ecfeff,stroke:#0f766e,color:#134e4a,stroke-width:2px;
+classDef driver fill:#fffbeb,stroke:#d97706,color:#78350f,stroke-width:2px;
+classDef core fill:#f1f5f9,stroke:#334155,color:#0f172a,stroke-width:2px;
+classDef data fill:#ecfdf5,stroke:#16a34a,color:#14532d,stroke-width:2px;
+classDef external fill:#eff6ff,stroke:#2563eb,color:#1e3a8a,stroke-width:2px;
+classDef offline fill:#fff7ed,stroke:#ea580c,color:#7c2d12,stroke-width:2px;
+classDef warn fill:#fef2f2,stroke:#dc2626,color:#7f1d1d,stroke-width:2px;
+classDef adaptive fill:#f5f3ff,stroke:#7c3aed,color:#4c1d95,stroke-width:2px;
+classDef success fill:#f0fdf4,stroke:#22c55e,color:#14532d,stroke-width:2px;
+classDef muted fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-width:1.5px;

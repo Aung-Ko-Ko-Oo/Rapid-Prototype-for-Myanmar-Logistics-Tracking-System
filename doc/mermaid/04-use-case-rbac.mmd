@@ -1,0 +1,70 @@
+%%{init: {"theme":"base","flowchart":{"curve":"basis","htmlLabels":true,"nodeSpacing":34,"rankSpacing":46},"themeVariables":{"fontFamily":"Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif","fontSize":"15px","primaryTextColor":"#0f172a","lineColor":"#64748b","clusterBkg":"#f8fafc","clusterBorder":"#cbd5e1","edgeLabelBackground":"#ffffff","tertiaryColor":"#f8fafc"}}}%%
+flowchart LR
+  subgraph ACTORS["ACTORS"]
+    A(["Admin"]):::admin
+    T(["Trader"]):::trader
+    D(["Driver"]):::driver
+  end
+
+  subgraph SHARED["SHARED PLATFORM CAPABILITIES"]
+    LOGIN["Login / Logout"]:::core
+    MAP["View role-appropriate map"]:::core
+    NOTIF["Receive / read notifications"]:::core
+  end
+
+  subgraph ADMINUC["ADMIN OPERATIONS"]
+    ALL["View all shipments"]:::admin
+    ASSIGN["Assign Driver"]:::admin
+    REVIEW["Review conflicting / suspicious incidents"]:::admin
+    GATE["Create / manage trusted gate knowledge"]:::admin
+    OVERRIDE["Manual incident / route-status override"]:::admin
+    BCAST["Broadcast operational alert"]:::admin
+  end
+
+  subgraph TRADERUC["TRADER SELF-SERVICE"]
+    REQ["Create shipment request"]:::trader
+    OWN["View own shipments only"]:::trader
+    TRACK["Track cargo timeline / map"]:::trader
+    PROOF["View documents & delivery proof"]:::trader
+  end
+
+  subgraph DRIVERUC["DRIVER FIELD OPERATIONS"]
+    TRIP["View assigned trip"]:::driver
+    STATUS["Update shipment status"]:::driver
+    GPS["Send live / offline GPS"]:::driver
+    REPORT["Report existing or new checkpoint"]:::driver
+    PHOTO["Upload operational evidence"]:::driver
+    REROUTE["Choose / reroute own assigned trip"]:::driver
+    OBS["Record unmapped observed route"]:::adaptive
+    DEL["Mark delivered + proof"]:::driver
+  end
+
+  A --> LOGIN
+  T --> LOGIN
+  D --> LOGIN
+  A --> MAP
+  T --> MAP
+  D --> MAP
+  A --> NOTIF
+  T --> NOTIF
+  D --> NOTIF
+  A --> ALL & ASSIGN & REVIEW & GATE & OVERRIDE & BCAST
+  T --> REQ & OWN & TRACK & PROOF
+  D --> TRIP & STATUS & GPS & REPORT & PHOTO & REROUTE & OBS & DEL
+
+  NOTE1["Authority split:<br/>Admin = trusted operational information<br/>Driver = field movement & route choice<br/>Trader = own-cargo visibility"]:::muted
+  NOTE2["Forbidden examples:<br/>Trader cannot approve incidents<br/>Driver cannot edit another Driver's shipment<br/>Driver cannot directly rewrite official gate status"]:::warn
+  A --- NOTE1
+  NOTE1 --- NOTE2
+
+classDef admin fill:#eef2ff,stroke:#4f46e5,color:#312e81,stroke-width:2px;
+classDef trader fill:#ecfeff,stroke:#0f766e,color:#134e4a,stroke-width:2px;
+classDef driver fill:#fffbeb,stroke:#d97706,color:#78350f,stroke-width:2px;
+classDef core fill:#f1f5f9,stroke:#334155,color:#0f172a,stroke-width:2px;
+classDef data fill:#ecfdf5,stroke:#16a34a,color:#14532d,stroke-width:2px;
+classDef external fill:#eff6ff,stroke:#2563eb,color:#1e3a8a,stroke-width:2px;
+classDef offline fill:#fff7ed,stroke:#ea580c,color:#7c2d12,stroke-width:2px;
+classDef warn fill:#fef2f2,stroke:#dc2626,color:#7f1d1d,stroke-width:2px;
+classDef adaptive fill:#f5f3ff,stroke:#7c3aed,color:#4c1d95,stroke-width:2px;
+classDef success fill:#f0fdf4,stroke:#22c55e,color:#14532d,stroke-width:2px;
+classDef muted fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-width:1.5px;

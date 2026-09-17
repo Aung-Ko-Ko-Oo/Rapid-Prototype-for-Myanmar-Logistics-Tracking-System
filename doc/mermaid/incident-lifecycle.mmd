@@ -1,9 +1,0 @@
-stateDiagram-v2
-  [*] --> PENDING
-  PENDING --> CONFIRMED: corroborated/manual confirm
-  PENDING --> UNCERTAIN: conflicting evidence
-  UNCERTAIN --> CONFIRMED: stronger corroboration
-  CONFIRMED --> RESOLVED: repeated CLEAR/manual resolution
-  UNCERTAIN --> RESOLVED: evidence clears issue
-  RESOLVED --> ARCHIVED
-  ARCHIVED --> [*]

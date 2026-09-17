@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>05 · Complete ER Diagram</title><style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--muted:#64748b;--line:#e2e8f0;--accent:#4f46e5}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;background:linear-gradient(180deg,#f8fafc 0,#eef2ff 100%);color:var(--ink)}
+header{padding:28px 34px 20px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.88);backdrop-filter:blur(12px);position:sticky;top:0;z-index:10}
+h1{margin:0;font-size:26px;letter-spacing:-.02em}.sub{margin-top:7px;color:var(--muted);font-size:14px;max-width:980px}.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.chip{font-size:12px;padding:5px 9px;border-radius:999px;background:#eef2ff;color:#3730a3;border:1px solid #c7d2fe}
+main{padding:24px 28px 44px;max-width:1600px;margin:auto}.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 18px 55px rgba(15,23,42,.08);padding:22px;overflow:auto}.mermaid{min-width:900px;display:flex;justify-content:center}.toolbar{display:flex;gap:10px;align-items:center;margin-bottom:14px}.btn{border:1px solid #cbd5e1;background:white;color:#334155;border-radius:9px;padding:8px 11px;font-size:13px;cursor:pointer}.btn:hover{border-color:#818cf8;color:#4338ca}.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:8px;margin-top:16px}.key{display:flex;align-items:center;gap:8px;font-size:12px;color:#475569}.swatch{width:13px;height:13px;border-radius:4px;border:1px solid rgba(0,0,0,.12)}
+footer{padding:0 28px 28px;color:#64748b;font-size:12px;max-width:1600px;margin:auto}
+@media print{header{position:static}.toolbar{display:none}body{background:white}.panel{box-shadow:none;border:none;padding:0}.mermaid{min-width:0}main{padding:0}}
+</style></head>
+<body><header><h1>05 · Complete ER Diagram</h1><div class="sub">Defines persistent entities, key identifiers, and cardinalities used by Supabase/PostgreSQL.</div><div class="chips"><span class="chip">Technical / Report</span><span class="chip">Myanmar Logistics Prototype</span></div></header>
+<main><div class="toolbar"><button class="btn" onclick="navigator.clipboard.writeText(document.getElementById('source').textContent)">Copy Mermaid source</button><button class="btn" onclick="window.print()">Print / Save PDF</button><a class="btn" href="../mermaid/05-er-diagram.mmd" style="text-decoration:none">Open .mmd</a></div><div class="panel"><pre class="mermaid">%%{init: {&quot;theme&quot;:&quot;base&quot;,&quot;themeVariables&quot;:{&quot;fontFamily&quot;:&quot;Inter, ui-sans-serif, system-ui, sans-serif&quot;,&quot;fontSize&quot;:&quot;14px&quot;,&quot;primaryTextColor&quot;:&quot;#0f172a&quot;,&quot;lineColor&quot;:&quot;#64748b&quot;,&quot;primaryColor&quot;:&quot;#ffffff&quot;,&quot;primaryBorderColor&quot;:&quot;#94a3b8&quot;,&quot;tertiaryColor&quot;:&quot;#f8fafc&quot;}}}%%
+erDiagram
+    PROFILE ||--o{ SHIPMENT : &quot;trader creates&quot;
+    PROFILE ||--o{ SHIPMENT : &quot;driver assigned&quot;
+    PROFILE ||--o{ SHIPMENT_EVENT : creates
+    PROFILE ||--o{ GATE_REPORT : reports
+    PROFILE ||--o{ ALERT : receives
+    PROFILE ||--o{ DOCUMENT : uploads
+
+    ROUTE ||--o{ ROUTE_POINT : contains
+    ROUTE ||--o{ ROUTE_TRAVERSAL : &quot;evidenced by&quot;
+    ROUTE ||--o{ INCIDENT : affected_by
+    ROUTE ||--o{ SHIPMENT : &quot;active route&quot;
+
+    SHIPMENT ||--o{ SHIPMENT_EVENT : history
+    SHIPMENT ||--o{ ROUTE_TRAVERSAL : journeys
+    SHIPMENT ||--o{ GATE_REPORT : context
+    SHIPMENT ||--o{ ALERT : triggers
+    SHIPMENT ||--o{ DOCUMENT : evidence
+
+    GATE ||--o{ INCIDENT : location
+    GATE ||--o{ GATE_REPORT : observations
+    INCIDENT ||--o{ GATE_REPORT : aggregates
+    INCIDENT ||--o{ ALERT : generates
+
+    PROFILE {
+      uuid id PK
+      text full_name
+      enum role
+      text phone
+      boolean is_active
+    }
+    SHIPMENT {
+      uuid id PK
+      text tracking_number UK
+      uuid trader_id FK
+      uuid driver_id FK
+      uuid active_route_id FK
+      enum current_status
+      enum delay_status
+      decimal current_lat
+      decimal current_lng
+      timestamptz delivered_at
+    }
+    SHIPMENT_EVENT {
+      uuid id PK
+      uuid shipment_id FK
+      enum event_type
+      text previous_status
+      text new_status
+      uuid created_by FK
+      text client_event_id UK
+      jsonb metadata
+      timestamptz created_at
+    }
+    ROUTE {
+      uuid id PK
+      text name
+      enum source
+      enum trust_status
+      enum operational_status
+      int confidence_score
+      int successful_trip_count
+      int unique_driver_count
+      timestamptz last_successful_trip_at
+    }
+    ROUTE_POINT {
+      uuid id PK
+      uuid route_id FK
+      int sequence
+      decimal latitude
+      decimal longitude
+    }
+    ROUTE_TRAVERSAL {
+      uuid id PK
+      uuid route_id FK
+      uuid shipment_id FK
+      uuid driver_id FK
+      enum location_source
+      boolean successful
+      boolean eligible_for_reinforcement
+      decimal coverage_ratio
+    }
+    GATE {
+      uuid id PK
+      text name
+      enum gate_type
+      decimal latitude
+      decimal longitude
+      boolean verified
+      timestamptz archived_at
+    }
+    INCIDENT {
+      uuid id PK
+      uuid gate_id FK
+      uuid route_id FK
+      enum incident_type
+      enum state
+      enum severity
+      decimal confidence
+      boolean admin_override
+    }
+    GATE_REPORT {
+      uuid id PK
+      uuid incident_id FK
+      uuid gate_id FK
+      uuid shipment_id FK
+      uuid driver_id FK
+      enum reported_condition
+      enum verification_status
+      text client_event_id UK
+      timestamptz reported_at
+    }
+    ALERT {
+      uuid id PK
+      uuid user_id FK
+      uuid shipment_id FK
+      uuid route_id FK
+      uuid incident_id FK
+      enum severity
+      boolean is_read
+      timestamptz created_at
+    }
+    DOCUMENT {
+      uuid id PK
+      uuid shipment_id FK
+      uuid uploaded_by FK
+      enum document_type
+      text file_path
+      decimal latitude
+      decimal longitude
+      text client_event_id UK
+    }
+</pre>
+<div class="legend">
+ <div class="key"><span class="swatch" style="background:#eef2ff;border-color:#4f46e5"></span>Admin</div>
+ <div class="key"><span class="swatch" style="background:#ecfeff;border-color:#0f766e"></span>Trader</div>
+ <div class="key"><span class="swatch" style="background:#fffbeb;border-color:#d97706"></span>Driver</div>
+ <div class="key"><span class="swatch" style="background:#ecfdf5;border-color:#16a34a"></span>Data / Supabase</div>
+ <div class="key"><span class="swatch" style="background:#eff6ff;border-color:#2563eb"></span>External service</div>
+ <div class="key"><span class="swatch" style="background:#fff7ed;border-color:#ea580c"></span>Offline / local</div>
+ <div class="key"><span class="swatch" style="background:#fef2f2;border-color:#dc2626"></span>Incident / warning</div>
+ <div class="key"><span class="swatch" style="background:#f5f3ff;border-color:#7c3aed"></span>Adaptive routing</div>
+</div></div><pre id="source" style="display:none">%%{init: {&quot;theme&quot;:&quot;base&quot;,&quot;themeVariables&quot;:{&quot;fontFamily&quot;:&quot;Inter, ui-sans-serif, system-ui, sans-serif&quot;,&quot;fontSize&quot;:&quot;14px&quot;,&quot;primaryTextColor&quot;:&quot;#0f172a&quot;,&quot;lineColor&quot;:&quot;#64748b&quot;,&quot;primaryColor&quot;:&quot;#ffffff&quot;,&quot;primaryBorderColor&quot;:&quot;#94a3b8&quot;,&quot;tertiaryColor&quot;:&quot;#f8fafc&quot;}}}%%
+erDiagram
+    PROFILE ||--o{ SHIPMENT : &quot;trader creates&quot;
+    PROFILE ||--o{ SHIPMENT : &quot;driver assigned&quot;
+    PROFILE ||--o{ SHIPMENT_EVENT : creates
+    PROFILE ||--o{ GATE_REPORT : reports
+    PROFILE ||--o{ ALERT : receives
+    PROFILE ||--o{ DOCUMENT : uploads
+
+    ROUTE ||--o{ ROUTE_POINT : contains
+    ROUTE ||--o{ ROUTE_TRAVERSAL : &quot;evidenced by&quot;
+    ROUTE ||--o{ INCIDENT : affected_by
+    ROUTE ||--o{ SHIPMENT : &quot;active route&quot;
+
+    SHIPMENT ||--o{ SHIPMENT_EVENT : history
+    SHIPMENT ||--o{ ROUTE_TRAVERSAL : journeys
+    SHIPMENT ||--o{ GATE_REPORT : context
+    SHIPMENT ||--o{ ALERT : triggers
+    SHIPMENT ||--o{ DOCUMENT : evidence
+
+    GATE ||--o{ INCIDENT : location
+    GATE ||--o{ GATE_REPORT : observations
+    INCIDENT ||--o{ GATE_REPORT : aggregates
+    INCIDENT ||--o{ ALERT : generates
+
+    PROFILE {
+      uuid id PK
+      text full_name
+      enum role
+      text phone
+      boolean is_active
+    }
+    SHIPMENT {
+      uuid id PK
+      text tracking_number UK
+      uuid trader_id FK
+      uuid driver_id FK
+      uuid active_route_id FK
+      enum current_status
+      enum delay_status
+      decimal current_lat
+      decimal current_lng
+      timestamptz delivered_at
+    }
+    SHIPMENT_EVENT {
+      uuid id PK
+      uuid shipment_id FK
+      enum event_type
+      text previous_status
+      text new_status
+      uuid created_by FK
+      text client_event_id UK
+      jsonb metadata
+      timestamptz created_at
+    }
+    ROUTE {
+      uuid id PK
+      text name
+      enum source
+      enum trust_status
+      enum operational_status
+      int confidence_score
+      int successful_trip_count
+      int unique_driver_count
+      timestamptz last_successful_trip_at
+    }
+    ROUTE_POINT {
+      uuid id PK
+      uuid route_id FK
+      int sequence
+      decimal latitude
+      decimal longitude
+    }
+    ROUTE_TRAVERSAL {
+      uuid id PK
+      uuid route_id FK
+      uuid shipment_id FK
+      uuid driver_id FK
+      enum location_source
+      boolean successful
+      boolean eligible_for_reinforcement
+      decimal coverage_ratio
+    }
+    GATE {
+      uuid id PK
+      text name
+      enum gate_type
+      decimal latitude
+      decimal longitude
+      boolean verified
+      timestamptz archived_at
+    }
+    INCIDENT {
+      uuid id PK
+      uuid gate_id FK
+      uuid route_id FK
+      enum incident_type
+      enum state
+      enum severity
+      decimal confidence
+      boolean admin_override
+    }
+    GATE_REPORT {
+      uuid id PK
+      uuid incident_id FK
+      uuid gate_id FK
+      uuid shipment_id FK
+      uuid driver_id FK
+      enum reported_condition
+      enum verification_status
+      text client_event_id UK
+      timestamptz reported_at
+    }
+    ALERT {
+      uuid id PK
+      uuid user_id FK
+      uuid shipment_id FK
+      uuid route_id FK
+      uuid incident_id FK
+      enum severity
+      boolean is_read
+      timestamptz created_at
+    }
+    DOCUMENT {
+      uuid id PK
+      uuid shipment_id FK
+      uuid uploaded_by FK
+      enum document_type
+      text file_path
+      decimal latitude
+      decimal longitude
+      text client_event_id UK
+    }
+</pre></main>
+<footer>Generated from the final 300-question design decisions. Mandatory assignment features and team extensions are separated in the documentation pack.</footer>
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@12/dist/mermaid.esm.min.mjs'; mermaid.initialize({startOnLoad:true,securityLevel:'loose'});</script></body></html>

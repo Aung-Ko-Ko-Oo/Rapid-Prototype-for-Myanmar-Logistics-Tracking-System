@@ -1,0 +1,72 @@
+%%{init: {"theme":"base","sequence":{"useMaxWidth":true,"wrap":true,"diagramMarginX":40,"diagramMarginY":20,"actorMargin":40,"messageMargin":28},"themeVariables":{"fontFamily":"Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif","fontSize":"15px","primaryTextColor":"#0f172a","lineColor":"#64748b","actorBkg":"#ffffff","actorBorder":"#64748b","actorTextColor":"#0f172a","signalColor":"#334155","signalTextColor":"#0f172a","labelBoxBkgColor":"#f8fafc","labelBoxBorderColor":"#cbd5e1","noteBkgColor":"#fefce8","noteBorderColor":"#facc15"}}}%%
+sequenceDiagram
+  autonumber
+  actor T as Trader
+  actor A as Admin
+  actor D as Driver
+  participant UI as React App
+  participant IDB as IndexedDB
+  participant API as FastAPI
+  participant DB as Supabase DB/Storage
+  participant RT as Supabase Realtime
+  participant ORS as OpenRouteService
+
+  T->>UI: Create shipment request
+  UI->>API: POST /shipments
+  API->>DB: Insert SHP-001
+  DB-->>UI: Shipment created
+
+  A->>UI: Assign Driver + initial route
+  UI->>API: POST /shipments/{id}/assign
+  API->>DB: Update shipment + event
+  DB->>RT: Shipment change
+  RT-->>UI: Driver assignment visible
+
+  D->>UI: Start trip
+  UI->>ORS: Request route geometry
+  ORS-->>UI: Route / cached fallback if unavailable
+  D->>UI: Start live or simulated GPS
+  UI->>API: Batch location points
+  API->>DB: Store current position / events
+  DB->>RT: Position changed
+  RT-->>UI: Admin & Trader maps update
+
+  rect rgb(255,247,237)
+    Note over D,IDB: Connectivity drops — Driver remains operational
+    D->>UI: Report unexpected checkpoint + photo
+    UI->>IDB: Queue gate report, GPS, photo metadata
+    D->>UI: Continue moving
+    UI->>IDB: Queue GPS batches
+  end
+
+  Note over D,API: Connection restored
+  UI->>API: Sync queued items with client_event_id
+  API->>DB: Deduplicate + persist report
+  API->>DB: Create / update incident
+  DB->>RT: Incident changed
+  RT-->>UI: Admin sees pending / confirmed incident
+
+  A->>UI: Review conflict if needed
+  UI->>API: Manual accept/override only when needed
+  API->>DB: Update incident state
+  API->>DB: Create affected-user alerts
+  DB->>RT: Alert + route condition
+  RT-->>UI: Trader warning & map update
+
+  D->>UI: Choose alternate / observed route
+  UI->>API: POST /shipments/{id}/reroute
+  API->>DB: Log old/new route + event
+  DB->>RT: Route changed
+  RT-->>UI: Admin & Trader see new route
+
+  opt Driver follows unmapped path
+    UI->>IDB: Record breadcrumbs while offline/unstable
+    UI->>API: POST /routes/observed
+    API->>DB: Save DRIVER_OBSERVED route
+  end
+
+  D->>UI: Mark Delivered + proof photo
+  UI->>API: POST /shipments/{id}/deliver
+  API->>DB: Save proof + delivery event
+  DB->>RT: Shipment delivered
+  RT-->>UI: Trader sees Delivered + proof

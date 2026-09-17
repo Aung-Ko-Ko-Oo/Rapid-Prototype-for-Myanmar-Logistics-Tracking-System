@@ -5,4 +5,4 @@
 
 #Northern Corridor (Yangon – Mandalay – Pyin Oo Lwin – Lashio – Muse / China Border) and the Eastern Corridor (Yangon – Bago – Hpa-An – Kawkareik – Myawaddy / Thailand Border)
 
-ech stack = react (frontend), database (firebase) or sqlite, web app, OSRM - route API, OSM - basemap API,
+#Tech stack = react (frontend), database (firebase) or sqlite, web app, OSRM - route API, OSM - basemap API,

@@ -10,6 +10,9 @@ import Spinner from './components/ui/Spinner'
 import EmptyState from './components/ui/EmptyState'
 import Table from './components/ui/Table'
 import ShipmentStatusBadge from './components/logistics/ShipmentStatusBadge'
+import AppShell from './components/layout/AppShell'
+import PageHeader from './components/layout/PageHeader'
+
 
 function App() {
   const shipmentColumns = [
@@ -75,8 +78,48 @@ const shipmentRows = [
 ]
 
 
+const adminNavigation = [
+  {
+    label: 'Dashboard',
+    path: '/admin',
+    icon: '▦',
+  },
+  {
+    label: 'Shipments',
+    path: '/admin/shipments',
+    icon: '▤',
+  },
+  {
+    label: 'Operations Map',
+    path: '/admin/map',
+    icon: '⌖',
+  },
+  {
+    label: 'Incidents',
+    path: '/admin/incidents',
+    icon: '⚠',
+  },
+  {
+    label: 'Broadcast Alerts',
+    path: '/admin/alerts',
+    icon: '◉',
+  },
+]
+
+
   return (
-    <main className="min-h-screen bg-slate-50 p-6 md:p-10">
+    
+    <AppShell
+  role="admin"
+  userName="Aung Admin"
+  navItems={adminNavigation}
+  activePath="/admin"
+  unreadCount={3}
+  onNavigate={(path) => {
+    console.log('Navigate:', path)
+  }}
+>
+
       <div className="mx-auto max-w-6xl">
         <div>
           <p className="text-sm font-semibold text-brand-600">
@@ -374,7 +417,7 @@ const shipmentRows = [
 </Card>
       </div>
       
-    </main>
+    </AppShell>
   )
 }
 

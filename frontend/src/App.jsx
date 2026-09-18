@@ -5,6 +5,9 @@ import FormField from './components/ui/FormField'
 import Input from './components/ui/Input'
 import Select from './components/ui/Select'
 import Textarea from './components/ui/Textarea'
+import Alert from './components/ui/Alert'
+import Spinner from './components/ui/Spinner'
+import EmptyState from './components/ui/EmptyState'
 
 function App() {
   return (
@@ -201,6 +204,69 @@ function App() {
     <Button>
       Create Shipment
     </Button>
+  </div>
+</Card>
+<Card className="mt-6 p-6">
+  <h2 className="text-lg font-semibold text-slate-900">
+    Feedback & States
+  </h2>
+
+  <p className="mt-1 text-sm text-slate-500">
+    Alerts, loading states and empty states used across logistics workflows.
+  </p>
+
+  <div className="mt-6 grid gap-4 md:grid-cols-2">
+    <Alert
+      variant="info"
+      title="Shipment Updated"
+    >
+      The latest shipment information has been received.
+    </Alert>
+
+    <Alert
+      variant="success"
+      title="Driver Assigned"
+    >
+      The shipment is now assigned and ready for pickup.
+    </Alert>
+
+    <Alert
+      variant="warning"
+      title="Checkpoint Delay"
+    >
+      A checkpoint on the active route is reporting congestion.
+    </Alert>
+
+    <Alert
+      variant="danger"
+      title="Route Blocked"
+    >
+      The active route is currently blocked. Affected shipments may require rerouting.
+    </Alert>
+  </div>
+
+  <div className="mt-8">
+    <h3 className="text-sm font-semibold text-slate-700">
+      Loading
+    </h3>
+
+    <div className="mt-4 flex items-center gap-6">
+      <Spinner size="sm" />
+      <Spinner />
+      <Spinner size="lg" />
+    </div>
+  </div>
+
+  <div className="mt-8">
+    <EmptyState
+      title="No shipments yet"
+      description="Create your first transport request to start tracking cargo."
+      action={
+        <Button>
+          Create Shipment
+        </Button>
+      }
+    />
   </div>
 </Card>
       </div>

@@ -9,6 +9,7 @@ import Alert from './components/ui/Alert'
 import Spinner from './components/ui/Spinner'
 import EmptyState from './components/ui/EmptyState'
 import Table from './components/ui/Table'
+import ShipmentStatusBadge from './components/logistics/ShipmentStatusBadge'
 
 function App() {
   const shipmentColumns = [
@@ -25,33 +26,13 @@ function App() {
     key: 'route',
     header: 'Route',
   },
-  {
-    key: 'status',
-    header: 'Status',
-    render: (shipment) => {
-      const tones = {
-        REQUESTED: 'neutral',
-        ASSIGNED: 'primary',
-        IN_TRANSIT: 'teal',
-        AT_CHECKPOINT: 'warning',
-        DELIVERED: 'success',
-      }
-
-      const labels = {
-        REQUESTED: 'Requested',
-        ASSIGNED: 'Assigned',
-        IN_TRANSIT: 'In Transit',
-        AT_CHECKPOINT: 'At Checkpoint',
-        DELIVERED: 'Delivered',
-      }
-
-      return (
-        <Badge tone={tones[shipment.status]}>
-          {labels[shipment.status]}
-        </Badge>
-      )
-    },
-  },
+ {
+  key: 'status',
+  header: 'Status',
+  render: (shipment) => (
+    <ShipmentStatusBadge status={shipment.status} />
+  ),
+},
   {
     key: 'eta',
     header: 'ETA',
@@ -368,6 +349,28 @@ const shipmentRows = [
     columns={shipmentColumns}
     rows={shipmentRows}
   />
+</Card>
+
+
+<Card className="mt-6 p-6">
+  <h2 className="text-lg font-semibold text-slate-900">
+    Shipment Status System
+  </h2>
+
+  <p className="mt-1 text-sm text-slate-500">
+    Shared shipment lifecycle indicators.
+  </p>
+
+  <div className="mt-5 flex flex-wrap gap-3">
+    <ShipmentStatusBadge status="REQUESTED" />
+    <ShipmentStatusBadge status="ASSIGNED" />
+    <ShipmentStatusBadge status="PICKED_UP" />
+    <ShipmentStatusBadge status="IN_TRANSIT" />
+    <ShipmentStatusBadge status="AT_CHECKPOINT" />
+    <ShipmentStatusBadge status="CUSTOMS" />
+    <ShipmentStatusBadge status="DELIVERED" />
+    <ShipmentStatusBadge status="CANCELLED" />
+  </div>
 </Card>
       </div>
       

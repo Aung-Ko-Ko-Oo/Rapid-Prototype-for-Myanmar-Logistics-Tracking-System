@@ -8,8 +8,92 @@ import Textarea from './components/ui/Textarea'
 import Alert from './components/ui/Alert'
 import Spinner from './components/ui/Spinner'
 import EmptyState from './components/ui/EmptyState'
+import Table from './components/ui/Table'
 
 function App() {
+  const shipmentColumns = [
+  {
+    key: 'tracking',
+    header: 'Tracking',
+    cellClassName: 'font-semibold text-slate-900',
+  },
+  {
+    key: 'trader',
+    header: 'Trader',
+  },
+  {
+    key: 'route',
+    header: 'Route',
+  },
+  {
+    key: 'status',
+    header: 'Status',
+    render: (shipment) => {
+      const tones = {
+        REQUESTED: 'neutral',
+        ASSIGNED: 'primary',
+        IN_TRANSIT: 'teal',
+        AT_CHECKPOINT: 'warning',
+        DELIVERED: 'success',
+      }
+
+      const labels = {
+        REQUESTED: 'Requested',
+        ASSIGNED: 'Assigned',
+        IN_TRANSIT: 'In Transit',
+        AT_CHECKPOINT: 'At Checkpoint',
+        DELIVERED: 'Delivered',
+      }
+
+      return (
+        <Badge tone={tones[shipment.status]}>
+          {labels[shipment.status]}
+        </Badge>
+      )
+    },
+  },
+  {
+    key: 'eta',
+    header: 'ETA',
+  },
+]
+
+const shipmentRows = [
+  {
+    id: 1,
+    tracking: 'SHP-001',
+    trader: 'ABC Trading',
+    route: 'Yangon → Mandalay',
+    status: 'IN_TRANSIT',
+    eta: '18 Sep',
+  },
+  {
+    id: 2,
+    tracking: 'SHP-002',
+    trader: 'Ocean Co.',
+    route: 'Mandalay → Muse',
+    status: 'AT_CHECKPOINT',
+    eta: '19 Sep',
+  },
+  {
+    id: 3,
+    tracking: 'SHP-003',
+    trader: 'Green Leaf',
+    route: 'Yangon → Bago',
+    status: 'DELIVERED',
+    eta: 'Delivered',
+  },
+  {
+    id: 4,
+    tracking: 'SHP-004',
+    trader: 'Myanmar Foods',
+    route: 'Bago → Yangon',
+    status: 'REQUESTED',
+    eta: '20 Sep',
+  },
+]
+
+
   return (
     <main className="min-h-screen bg-slate-50 p-6 md:p-10">
       <div className="mx-auto max-w-6xl">
@@ -268,6 +352,22 @@ function App() {
       }
     />
   </div>
+</Card>
+<Card className="mt-6 p-6">
+  <div className="mb-5">
+    <h2 className="text-lg font-semibold text-slate-900">
+      Shipment Table
+    </h2>
+
+    <p className="mt-1 text-sm text-slate-500">
+      Reusable responsive data table for Admin and Trader shipment views.
+    </p>
+  </div>
+
+  <Table
+    columns={shipmentColumns}
+    rows={shipmentRows}
+  />
 </Card>
       </div>
       

@@ -6,11 +6,11 @@ stateDiagram-v2
   ASSIGNED --> PICKED_UP: Driver confirms pickup
   ASSIGNED --> CANCELLED: cancelled before pickup
   PICKED_UP --> IN_TRANSIT: journey starts / inferred
-  IN_TRANSIT --> AT_CHECKPOINT: Driver arrives at checkpoint
-  AT_CHECKPOINT --> IN_TRANSIT: checkpoint cleared / continue
-  IN_TRANSIT --> CUSTOMS: customs processing
-  CUSTOMS --> IN_TRANSIT: continue after customs
-  CUSTOMS --> DELIVERED: destination/customs is final handoff
+  IN_TRANSIT --> HELD_AT_CHECKPOINT: Driver arrives at checkpoint
+  HELD_AT_CHECKPOINT --> IN_TRANSIT: checkpoint cleared / continue
+  IN_TRANSIT --> CUSTOMS_PROCESSING: customs processing
+  CUSTOMS_PROCESSING --> IN_TRANSIT: continue after customs
+  CUSTOMS_PROCESSING --> DELIVERED: destination/customs is final handoff
   IN_TRANSIT --> DELIVERED: valid direct delivery
   DELIVERED --> [*]
   CANCELLED --> [*]
@@ -22,12 +22,12 @@ stateDiagram-v2
     DELAYED --> ON_TIME: recovered / delay cleared
   }
 
-  note right of AT_CHECKPOINT
+  note right of HELD_AT_CHECKPOINT
     Checkpoint may occur repeatedly.
     Every occurrence becomes a shipment_event.
   end note
 
   note right of DELAY_CONDITION
     Delay is NOT the lifecycle state.
-    Example: AT_CHECKPOINT + DELAYED.
+    Example: HELD_AT_CHECKPOINT + DELAYED.
   end note

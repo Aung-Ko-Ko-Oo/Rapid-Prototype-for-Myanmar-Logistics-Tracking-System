@@ -14,7 +14,7 @@ Use the same visual language across every diagram:
 | Warning / Incident | Red | disruption / conflict / operational risk |
 | Adaptive routing | Violet | observed routes / confidence / learning |
 
-### Presentation rules
+## Presentation rules
 
 - Prefer one story per diagram.
 - Keep long database detail in ER/class diagrams, not presentation architecture.

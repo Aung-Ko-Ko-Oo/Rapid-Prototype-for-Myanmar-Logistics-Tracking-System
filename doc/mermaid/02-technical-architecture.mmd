@@ -25,6 +25,7 @@ flowchart TB
     ALERT["Alert Service"]:::core
     ROUTE["Routing Service"]:::core
     CONF["Route Confidence Engine"]:::adaptive
+    KPI["Dashboard KPI Service<br/>role-scoped aggregates • freshness • currency normalization"]:::core
     DOC["Document Service"]:::core
     SYNC["Offline Sync / Idempotency"]:::offline
   end
@@ -61,6 +62,7 @@ flowchart TB
   AUTH --> INC
   AUTH --> ALERT
   AUTH --> ROUTE
+  AUTH --> KPI
   AUTH --> DOC
   SYNC --> SHIP
   SYNC --> INC
@@ -69,6 +71,7 @@ flowchart TB
   INC --> PG
   ALERT --> PG
   ROUTE --> PG
+  KPI --> PG
   CONF --> PG
   DOC --> PG
   DOC --> STORE

@@ -25,3 +25,8 @@
 - **Driver:** field evidence + operational route choice for their assigned shipment.
 - **Trader:** shipment request and visibility into their own cargo.
 - **System consensus:** routine incidents may auto-confirm/resolve from multiple independent Driver reports; Admin can override.
+
+
+## Dashboard / analytics service
+
+FastAPI owns role-scoped KPI aggregation. It derives counts/rates from normalized shipment/events/incidents data, normalizes currencies before summing, and returns freshness metadata. React renders KPI cards but must not be the authority for cross-user filtering or commercial-data scoping.

@@ -11,3 +11,8 @@ Use predefined route points with start/pause/next/jump-to-checkpoint controls. S
 
 ## IndexedDB queue
 Queue types: GPS batch, status update, gate report, document upload, delivery event. Queue states: PENDING, SYNCING, SYNCED, FAILED. Every action gets `client_event_id` for idempotent synchronization. Partial failure must not block independent queue items.
+
+
+## Device sync-health heartbeat
+
+When connected, the Driver client periodically reports `pending_sync_count`, connection status and report time to the backend. This summary supports the Admin `Devices With Pending Sync` KPI; the server never reads the browser's IndexedDB directly.

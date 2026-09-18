@@ -11,3 +11,8 @@ First observation creates PENDING state. Multiple matching reports from unique D
 
 ## Alerts
 Severities: INFO, WARNING, CRITICAL. Avoid spam by updating one evolving incident/alert rather than generating duplicate warnings for every report. Traders receive only alerts relevant to their shipment/route. Admin can broadcast manually by audience.
+
+
+## Dashboard severity guidance
+
+Do not convert every `CONGESTED` observation or minor delay into critical styling. Reserve red/critical treatment for serious states such as confirmed closure/emergency halt and explicitly CRITICAL broadcasts. This avoids alert fatigue and keeps the dashboard operationally legible.

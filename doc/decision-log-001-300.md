@@ -1,3 +1,7 @@
+# Historical Q001-Q300 Decision Log
+
+> **Frozen-baseline note:** This file preserves the original Grill-Me history. For implementation terminology that supersedes earlier wording (notably `HELD_AT_CHECKPOINT` and `CUSTOMS_PROCESSING`), use `00-FROZEN-BASELINE.md`.
+
 # Decision Log: Grill-Me Questions 001–300
 
 This file preserves every grill question, its four choices, the recommendation, the final team decision, and later refinements where applicable.

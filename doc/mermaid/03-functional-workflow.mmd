@@ -16,7 +16,7 @@ flowchart TD
   CHOOSE["Driver chooses alternate or unmapped path<br/>No routine Admin approval"]:::driver
   OBS["Record observed GPS trail<br/>DRIVER_OBSERVED route"]:::adaptive
   REINFORCE["Valid successful traversals reinforce confidence<br/>Independent Drivers can auto-confirm"]:::adaptive
-  CONT["Continue shipment<br/>Checkpoint ↔ In Transit ↔ Customs"]:::driver
+  CONT["Continue shipment<br/>HELD_AT_CHECKPOINT ↔ IN_TRANSIT ↔ CUSTOMS_PROCESSING"]:::driver
   DELIVER["Mark Delivered<br/>timestamp + GPS + proof photo"]:::driver
   DONE(["Trader sees Delivered + proof"]):::success
 

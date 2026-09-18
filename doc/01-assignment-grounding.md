@@ -15,3 +15,8 @@ The attached assignment asks for a rapid prototype called **Real-Time Logistics 
 **Team-specific adaptation:** the assignment assumes about 11 members, but this project plan is optimized for **5 people**.
 
 **Design extensions beyond the assignment:** real device GPS, Driver-controlled rerouting, dynamic temporary checkpoints, multi-Driver incident consensus, Driver-observed unmapped routes, and pheromone-inspired route confidence/recommendations. These are differentiators, not mandatory assignment requirements.
+
+
+## Frozen domain/KPI refinement
+
+The logistics glossary and KPI dashboard in `16-logistics-domain-glossary-kpis.md` are **team refinements**, not additional requirements stated in the assignment. They improve domain credibility and operational visibility, but assignment-core delivery remains RBAC, shipment lifecycle, map/GPS, gate/route status, alerts, Driver uploads and offline capability.

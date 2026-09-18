@@ -7,7 +7,7 @@
 
 ## Suggested 15-minute live flow
 1. Trader login and create SHP-001.
-2. Admin login; assign Driver and route.
+2. Admin login; briefly show live KPI cards + Last Updated, then assign Driver and route.
 3. Driver login; start trip and GPS tracking.
 4. Deliberately enter offline mode.
 5. Driver discovers/reports unexpected checkpoint offline.

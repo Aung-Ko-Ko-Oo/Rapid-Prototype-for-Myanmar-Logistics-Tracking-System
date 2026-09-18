@@ -1,0 +1,53 @@
+%%{init: {"theme":"base","flowchart":{"curve":"basis","htmlLabels":true,"nodeSpacing":34,"rankSpacing":50},"themeVariables":{"fontFamily":"Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif","fontSize":"15px","primaryTextColor":"#0f172a","lineColor":"#64748b","clusterBkg":"#f8fafc","clusterBorder":"#cbd5e1","edgeLabelBackground":"#ffffff","tertiaryColor":"#f8fafc"}}}%%
+flowchart LR
+  subgraph SOURCES["OPERATIONAL DATA SOURCES"]
+    SHIP["Shipments<br/>status • ETA • cargo value/currency"]:::data
+    EVT["Shipment Events<br/>checkpoint arrived/cleared • delivery"]:::data
+    INC["Gates & Incidents<br/>open • congested • blocked • closed"]:::warn
+    ALT["Alerts / Broadcasts<br/>severity • active state"]:::warn
+    DEV["Driver Device Status<br/>pending sync • last reported"]:::offline
+    GPS["Telemetry / GPS<br/>Driver activity timestamps"]:::external
+  end
+
+  KPI["FastAPI KPI Service<br/>canonical calculations"]:::core
+  TZ["MMT Time Normalizer<br/>UTC+06:30"]:::core
+  FX["Currency Normalizer<br/>shared static-demo rates"]:::core
+  SCOPE["RBAC / Data Scope<br/>Admin • Trader • Driver"]:::core
+  FRESH["Freshness Metadata<br/>generated_at • stale • last success"]:::core
+
+  subgraph METRICS["DERIVED KPI FAMILIES"]
+    K1["Shipment Counts<br/>Active • In Transit • Checkpoint • Customs • Delayed"]:::core
+    K2["Service KPIs<br/>Delivered Today • Transit Time • On-Time X/Y"]:::core
+    K3["Operational KPIs<br/>Gate Summary • Critical Alerts • Dwell Time"]:::core
+    K4["Fleet / Connectivity<br/>Pending Sync Devices • Fleet Active Today"]:::core
+    K5["Commercial<br/>Cargo Value In Transit"]:::core
+  end
+
+  subgraph UI["ROLE-SCOPED DASHBOARDS"]
+    ADMIN["Admin Dashboard<br/>system-wide permitted KPIs"]:::admin
+    TRADER["Trader Dashboard<br/>own shipments only"]:::trader
+    DRIVER["Driver Dashboard<br/>own operational metrics"]:::driver
+  end
+
+  STALE["Visible stale / error state<br/>Never silently freeze old data"]:::warn
+
+  SHIP & EVT & INC & ALT & DEV & GPS --> KPI
+  KPI --> TZ
+  KPI --> FX
+  TZ --> K1 & K2 & K3 & K4
+  FX --> K5
+  K1 & K2 & K3 & K4 & K5 --> SCOPE
+  KPI --> FRESH --> SCOPE
+  SCOPE --> ADMIN & TRADER & DRIVER
+  FRESH -. "poll/realtime failure" .-> STALE
+  STALE -.-> ADMIN & TRADER & DRIVER
+
+classDef admin fill:#eef2ff,stroke:#4f46e5,color:#312e81,stroke-width:2px;
+classDef trader fill:#ecfeff,stroke:#0f766e,color:#134e4a,stroke-width:2px;
+classDef driver fill:#fffbeb,stroke:#d97706,color:#78350f,stroke-width:2px;
+classDef core fill:#f1f5f9,stroke:#334155,color:#0f172a,stroke-width:2px;
+classDef data fill:#ecfdf5,stroke:#16a34a,color:#14532d,stroke-width:2px;
+classDef external fill:#eff6ff,stroke:#2563eb,color:#1e3a8a,stroke-width:2px;
+classDef offline fill:#fff7ed,stroke:#ea580c,color:#7c2d12,stroke-width:2px;
+classDef warn fill:#fef2f2,stroke:#dc2626,color:#7f1d1d,stroke-width:2px;
+classDef adaptive fill:#f5f3ff,stroke:#7c3aed,color:#4c1d95,stroke-width:2px;

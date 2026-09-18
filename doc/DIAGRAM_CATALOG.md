@@ -1,6 +1,6 @@
 # Polished Mermaid Diagram Catalog
 
-This set replaces the original 11-diagram draft with 15 more complete, presentation-quality diagrams.
+This set replaces the original 11-diagram draft with 16 complete, presentation-quality diagrams.
 
 ## Visual language
 
@@ -135,3 +135,11 @@ Makes ownership, integration dependencies, milestones, and presentation responsi
 - Mermaid: `mermaid/15-five-person-dependency.mmd`
 - HTML viewer: `html/15-five-person-dependency.html`
 - Best use: Team / Execution
+
+### 16 · Logistics Data → KPI Pipeline
+
+Shows how normalized shipment/events/incidents/device-health data becomes role-scoped dashboard KPIs, including MMT time normalization, currency normalization, freshness metadata, and visible stale/error handling.
+
+- Mermaid: `mermaid/16-logistics-kpi-pipeline.mmd`
+- HTML viewer: `html/16-logistics-kpi-pipeline.html`
+- Best use: Dashboard / Technical / Presentation

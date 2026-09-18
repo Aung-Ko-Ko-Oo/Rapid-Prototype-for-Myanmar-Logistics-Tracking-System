@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, test } from 'vitest'
 import AppRoutes from '../routes/AppRoutes'
 
+
 function renderRoute(path) {
   return render(
     <MemoryRouter initialEntries={[path]}>
@@ -48,6 +49,16 @@ describe('application routes', () => {
     expect(
       screen.getByRole('heading', {
         name: 'Design System',
+      }),
+    ).toBeInTheDocument()
+  })
+
+  test('renders admin map placeholder', () => {
+    renderRoute('/admin/map')
+
+    expect(
+      screen.getByRole('heading', {
+        name: 'Operations Map',
       }),
     ).toBeInTheDocument()
   })

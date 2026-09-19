@@ -22,6 +22,11 @@ const traderNavigation = [
     path: '/trader/alerts',
     icon: '◉',
   },
+  {
+    label: 'Driver View (Mobile)',
+    path: '/driver',
+    icon: '🚚',
+  },
 ]
 
 export default function TraderLayout() {

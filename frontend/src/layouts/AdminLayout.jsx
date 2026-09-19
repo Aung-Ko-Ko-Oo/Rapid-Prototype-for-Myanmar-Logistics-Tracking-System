@@ -32,6 +32,11 @@ const adminNavigation = [
     path: '/admin/alerts',
     icon: '◉',
   },
+  {
+    label: 'Driver View (Mobile)',
+    path: '/driver',
+    icon: '🚚',
+  },
 ]
 
 export default function AdminLayout() {

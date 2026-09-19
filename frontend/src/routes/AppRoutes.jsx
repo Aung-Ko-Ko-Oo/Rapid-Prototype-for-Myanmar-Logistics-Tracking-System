@@ -19,6 +19,7 @@ import TraderShipmentDetail from '../pages/trader/TraderShipmentDetail'
 import TraderAlerts from '../pages/trader/TraderAlerts'
 
 import DesignSystemShowcase from '../pages/DesignSystemShowcase'
+import AdminMap from '../pages/admin/AdminMap'
 
 export default function AppRoutes() {
   return (
@@ -80,6 +81,10 @@ export default function AppRoutes() {
           path="alerts"
           element={<AdminAlerts />}
         />
+        <Route
+          path="map"
+          element={<AdminMap />}
+        />
       </Route>
 
       <Route
@@ -87,5 +92,7 @@ export default function AppRoutes() {
         element={<Navigate to="/trader" replace />}
       />
     </Routes>
+    
+
   )
 }
